@@ -20,9 +20,12 @@
                     <li><a href="{% url 'home' %}" class="left brand-logo">Project Django</a></li>
                 </ul>
                 <ul class="right">
-                    {% comment %} <li><a href="{% url 'logout' %}">Log Out</a></li>
+                    {% if user.is_authenticated %}
+                    <li><a href="{% url 'logout' %}">Log Out</a></li>
+                    {% else %}
                     <li><a href="{% url 'login' %}">Log In</a></li>
-                    <li><a href="{% url 'signup' %}">Sign Up</a></li> {% endcomment %}
+                    <li><a href="{% url 'signup' %}">Sign Up</a></li>
+                    {% endif %}
                 </ul>
             </div>
         </nav>
