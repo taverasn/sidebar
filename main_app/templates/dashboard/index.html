@@ -4,14 +4,13 @@
 <h1>Dashboard</h1>
 
 <div>
-    <h2>Account</h2>
-    {% for account in accounts %}
-    <div class="card">
-        <div class="card-content">
-            <span class="card-title">{{ account.id }} {{ account.last_name }}</span>
+    <a href="{% url 'account_dashboard' %}">    
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title">View Account Info</span>
+            </div>
         </div>
-    </div>
-    {% endfor %}
+    </a>
 </div>
 
 {% endblock  %}
