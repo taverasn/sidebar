@@ -17,7 +17,7 @@
         <nav>        
             <div class="nav-wrapper">
                 <ul>
-                    <li><a href="{% url 'home' %}" class="left brand-logo">Project Django</a></li>
+                    <li><a href="{% url 'topics_index' %}" class="left brand-logo">Project Django</a></li>
                 </ul>
                 <ul class="right">
                     {% if user.is_authenticated %}
@@ -37,5 +37,9 @@
     <footer class="page-footer center">
         <div>All Rights Reserved, &copy; <span id="year"></span> Project Django</div> 
     </footer>
+    <script>
+        const spanEl = document.getElementById('year');
+        spanEl.innerText = new Date().getFullYear();
+    </script>
 </body>
 </html>
