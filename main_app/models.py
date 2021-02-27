@@ -10,4 +10,4 @@ class Account(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
     
     def __str__(self):
-        return f"{self.last_name} {self.last_name}"
+        return f"{self.last_name} {self.last_name}" 
