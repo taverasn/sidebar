@@ -35,6 +35,11 @@ def topics_index(request):
 # Account Views
 
 @login_required
+def dashboard_index(request):
+    accounts = Account.objects.filter(user=request.user)
+    return render(request, 'dashboard/index.html', {'accounts': accounts})
+
+@login_required
 def account_dashboard(request, account_id):
     account = Account.objects.get(id=account_id)
     return render(request, 'dashboard/account.html', {'account': account})

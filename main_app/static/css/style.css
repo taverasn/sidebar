@@ -108,8 +108,8 @@ footer {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    height: 50vh;
-    width: fit-content;
+    /* height: fit-content;
+    width: fit-content; */
 }
 
 .login-signup-buttons {
