@@ -1,0 +1,142 @@
+* {
+    box-sizing: border-box;
+}
+
+main {
+    flex-grow: 1;
+}
+
+.splash-body {
+    background: #3399ff;
+}
+
+.circle{
+position: absolute;
+border-radius: 50%;
+background: white;
+animation: ripple 45s infinite;
+box-shadow: 0px 0px 1px 0px #508fb9;
+}
+
+.small{
+width: 300px;
+height: 300px;
+}
+
+.medium{
+width: 400px;
+height: 400px;
+}
+
+.large{
+width: 600px;
+height: 600px;
+}
+
+.xlarge{
+width: 800px;
+height: 800px;
+}
+
+.xxlarge{
+width: 1000px;
+height: 1000px;
+}
+
+.shade1{
+opacity: 0.2;
+}
+.shade2{
+opacity: 0.5;
+}
+
+.shade3{
+opacity: 0.7;
+}
+
+.shade4{
+opacity: 0.8;
+}
+
+.shade5{
+opacity: 0.9;
+}
+
+@keyframes ripple{
+0%{
+    transform: scale(0.8);
+}
+
+50%{
+    transform: scale(1.2);
+}
+
+100%{
+    transform: scale(0.8);
+}
+}
+
+.splash-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 90vh;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100vw;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+
+.splash-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+    min-width: max-content;
+}
+
+.splash-card-main {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 50vh;
+    width: fit-content;
+}
+
+.login-signup-buttons {
+    display: flex;
+    flex-direction: row;
+    min-height: fit-content;
+}
+
+.login-signup-buttons > li {
+    margin: 15px;
+    background-color: white;
+    min-width: fit-content;
+}
+
+.login-signup-buttons > li:hover {
+    background-color: white;
+}
+
+.login-signup-buttons > li > a {
+    background-color: white;
+    width: fit-content;
+    color: rgb(100, 100, 100);
+}
+
+.splash-content {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+}
