@@ -8,6 +8,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Account
+from django.contrib.auth.models import User
 
 def signup(request):
     error_message = ''
@@ -36,13 +37,12 @@ def topics_index(request):
 
 @login_required
 def dashboard_index(request):
-    accounts = Account.objects.filter(user=request.user)
-    return render(request, 'dashboard/index.html', {'accounts': accounts})
+    return render(request, 'dashboard/index.html')
 
 @login_required
-def account_dashboard(request, account_id):
-    account = Account.objects.get(id=account_id)
-    return render(request, 'dashboard/account.html', {'account': account})
+def account_dashboard(request):
+    return render(request, 'dashboard/account.html')
+
 
 class AccountCreate(LoginRequiredMixin, CreateView):
     model = Account
@@ -55,4 +55,9 @@ class AccountCreate(LoginRequiredMixin, CreateView):
 
 class AccountUpdate(LoginRequiredMixin, UpdateView):
     model = Account
-    fields = ['first_name', 'last_name', 'email', 'bio', 'username', 'password']
+    fields = ['first_name', 'last_name', 'email', 'bio']
+    success_url = '/dashboard/'
+
+class AccountDelete(LoginRequiredMixin, DeleteView):
+    model = Account
+    success_url = '/'
