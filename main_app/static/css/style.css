@@ -85,13 +85,19 @@ opacity: 0.9;
 }
 
 footer {
+    display: flex;
+    flex-direction: column;
     position: absolute;
     bottom: 0;
-    width: 100vw;
+    width: 80vw;
     align-items: center;
     justify-content: center;
     padding-bottom: 10px;
     padding-top: 10px;
+}
+
+.splash-footer{
+    width: 100vw;
 }
 
 .splash-card {
@@ -164,10 +170,35 @@ footer {
     height: 100vh;
 }
 
+.navbar-content {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.rule {
+    background-color: white;
+    width: auto;
+    height: 4px;
+}
+
 .bookmarks-list {
     display: flex;
     flex-direction: column;
     padding-left: 10px;
     height: 90vh;
     overflow: scroll;
+}
+
+.bookmarks-list::-webkit-scrollbar {
+    display: none;
+}
+
+.dashboard-link-container {
+    /* position: absolute; */
+    bottom: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }
