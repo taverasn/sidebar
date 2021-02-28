@@ -1,49 +1,11 @@
-{% load static %}
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
-    <script defer src="{% static 'js/script.js' %}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <title>Project Django</title>
-</head>
-<body class="splash-body"> 
-    <div class="ripple-background">
-        <div class="circle xxlarge shade1"></div>
-        <div class="circle xlarge shade2"></div>
-        <div class="circle large shade3"></div>
-        <div class="circle mediun shade4"></div>
-        <div class="circle small shade5"></div>
+{% extends 'splash.html' %}
+{% block content %}
+    <span class="card-title">Blueit</span>
+    <div class="splash-content">
+        <p>Please sign up or log in to get started</p>
     </div>
-    <main class="splash-main">
-        <div class="row">
-            <div class="col s12 m4">
-                <div class="card medium grey darken-2 card-panel hoverable splash-card">
-                    <div class="card-content white-text splash-card-main">
-                        <span class="card-title">Blueit</span>
-                        <div class="splash-content">
-                            <p>Please sign up or log in to get started</p>
-                        </div>
-                        <div class="login-signup-buttons">
-                            <li class="center-align btn"><a href="{% url 'login' %}">Log In</a></li>
-                            <li class="center-align btn"><a href="{% url 'signup' %}">Sign Up</a></li>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
-    <footer class="page-footer center grey darken-2">
-        <div class="center-align">All Rights Reserved, &copy; <span id="year"></span> Project Django</div> 
-    </footer>
-    <script>
-        const spanEl = document.getElementById('year');
-        spanEl.innerText = new Date().getFullYear();
-    </script>
-</body>
-</html>
+    <div class="login-signup-buttons">
+        <li class="center-align btn"><a href="{% url 'login' %}">Log In</a></li>
+        <li class="center-align btn"><a href="{% url 'signup' %}">Sign Up</a></li>
+    </div>
+{% endblock  %}

@@ -108,8 +108,8 @@ footer {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    height: 50vh;
-    width: fit-content;
+    /* height: fit-content;
+    width: fit-content; */
 }
 
 .login-signup-buttons {
@@ -139,4 +139,35 @@ footer {
     flex: 1;
     justify-content: center;
     align-items: center;
+}
+
+.base-body{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.base-main {
+    display: flex;
+    flex-direction: column;
+    width: 80vw;
+    flex-grow: unset;
+    padding-left: 20px;
+}
+
+.side-navbar {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    left: 0;
+    width: 20vw;
+    height: 100vh;
+}
+
+.bookmarks-list {
+    display: flex;
+    flex-direction: column;
+    padding-left: 10px;
+    height: 90vh;
+    overflow: scroll;
 }

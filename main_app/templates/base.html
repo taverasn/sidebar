@@ -12,25 +12,37 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <title>SideBar</title>
 </head>
-<body> 
-    <header class="navbar-fixed">
-        <nav>        
-            <div class="nav-wrapper">
-                <ul>
-                    <li><a href="{% url 'topics_index' %}" class="left brand-logo">SideBar</a></li>
-                </ul>
-                <ul class="right">
+<body class="base-body"> 
+    <header>
+        <nav class="side-navbar">        
+            <div class="">
+                <div class="logo-box">
+                    <ul>
+                        <li><a href="{% url 'topics_index' %}" class="logo">SideBar</a></li>
+                    </ul>
+                </div>
+                <div class="rule"></div>
+                <div class="bookmarks-list">
+                    <span>BOOKMARK HERE</span>
+                    <span>BOOKMARK HERE</span>
+                    <span>BOOKMARK HERE</span>
+                    <span>BOOKMARK HERE</span>
+                    <span>BOOKMARK HERE</span>
+                    <span>BOOKMARK HERE</span>
+                    <span>BOOKMARK HERE</span>
+                    <span>BOOKMARK HERE</span>
+                </div>
+                <div class="rule"></div>
+                <ul class="">
                     {% if user.is_authenticated %}
+                    <li><a href="{% url 'dashboard_index' %}">Dashboard</a></li>
                     <li><a href="{% url 'logout' %}">Log Out</a></li>
-                    {% else %}
-                    <li><a href="{% url 'login' %}">Log In</a></li>
-                    <li><a href="{% url 'signup' %}">Sign Up</a></li>
                     {% endif %}
                 </ul>
             </div>
         </nav>
     </header>
-    <main class="container">
+    <main class="base-main">
         {% block content %}
         {% endblock %}
     </main>
