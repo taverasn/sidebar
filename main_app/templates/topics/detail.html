@@ -1,0 +1,51 @@
+<!-- {% extends 'base.html' %} -->
+{% extends 'topics_sidebar.html' %}
+
+{% block content %}
+
+
+<div class="row">
+    
+    
+    <div class="col s6">
+        <div class="">
+              <div class="">
+                <h3>{{ topic.title }}</h3>
+              </div>
+              <div>
+                  <p>{{ topic.body}}</p>
+              </div>
+              <div>
+                {% for post in posts %}
+                    <p>{{ post.title }}</p>
+                
+                {% endfor %}
+
+              </div>
+              
+        </div>
+        
+        
+    </div>
+    <div class="col s3">
+        <h3>Bookmark:</h3>
+        <h3>Tags</h3>
+        <div>
+            {% for tag in tags %}
+                    <p>{{ tag.title }}</p>
+                
+            {% endfor %}
+        </div>
+        <h3>Create Post</h3>
+
+    </div>
+</div>
+
+
+
+<!-- <div class="">
+  <a href="{% url 'topic_update' topic.id %}">Edit</a>
+  <a href="{% url 'topic_delete' topic.id %}">Delete</a>
+</div> -->
+
+{% endblock %}
