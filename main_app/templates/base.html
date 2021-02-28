@@ -14,8 +14,8 @@
 </head>
 <body class="base-body"> 
     <header>
-        <nav class="side-navbar">        
-            <div class="">
+        <nav class="side-navbar grey darken-2">        
+            <div class="navbar-content">
                 <div class="logo-box">
                     <ul>
                         <li><a href="{% url 'topics_index' %}" class="logo">SideBar</a></li>
@@ -31,14 +31,26 @@
                     <span>BOOKMARK HERE</span>
                     <span>BOOKMARK HERE</span>
                     <span>BOOKMARK HERE</span>
+                    <span>BOOKMARK HERE</span>
+                    <span>BOOKMARK HERE</span>
+                    <span>BOOKMARK HERE</span>
+                    <span>BOOKMARK HERE</span>
+                    <span>BOOKMARK HERE</span>
+                    <span>BOOKMARK HERE</span>
+                    <span>BOOKMARK HERE</span>
+                    <span>BOOKMARK HERE</span>
+                    <span>BOOKMARK HERE</span>
+                    <span>BOOKMARK HERE</span>
                 </div>
                 <div class="rule"></div>
-                <ul class="">
-                    {% if user.is_authenticated %}
-                    <li><a href="{% url 'dashboard_index' %}">Dashboard</a></li>
-                    <li><a href="{% url 'logout' %}">Log Out</a></li>
-                    {% endif %}
-                </ul>
+                <div class="dashboard-link-container">
+                    <ul>
+                        {% if user.is_authenticated %}
+                        <li><a href="{% url 'dashboard_index' %}">Dashboard</a></li>
+                        <li><a href="{% url 'logout' %}">Log Out</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
             </div>
         </nav>
     </header>
@@ -46,7 +58,7 @@
         {% block content %}
         {% endblock %}
     </main>
-    <footer class="page-footer center">
+    <footer class="base-footer grey darken-2">
         <div>All Rights Reserved, &copy; <span id="year"></span> Project Django</div> 
     </footer>
     <script>
