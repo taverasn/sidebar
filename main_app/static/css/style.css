@@ -4,10 +4,21 @@
 
 main {
     flex-grow: 1;
+    padding-right: 3rem;
 }
 
 .splash-body {
     background: #3399ff;
+}
+
+.ripple-background {
+    height: 100vh;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
 }
 
 .circle{
@@ -77,6 +88,11 @@ opacity: 0.9;
 }
 
 .splash-main {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -94,6 +110,12 @@ footer {
     justify-content: center;
     padding-bottom: 10px;
     padding-top: 10px;
+    color: white;
+}
+
+.base-footer {
+    background-color: #3399ff;
+    box-shadow: inset 3px 0 5px 3px rgba(100, 100, 100, 0.486);
 }
 
 .splash-footer{
@@ -114,8 +136,6 @@ footer {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    /* height: fit-content;
-    width: fit-content; */
 }
 
 .login-signup-buttons {
@@ -168,6 +188,8 @@ footer {
     left: 0;
     width: 20vw;
     height: 100vh;
+    background-color: #3399ff;
+    box-shadow: 3px 0 5px 3px rgba(100, 100, 100, 0.486);
 }
 
 .navbar-content {
@@ -179,13 +201,16 @@ footer {
 .rule {
     background-color: white;
     width: auto;
-    height: 4px;
+    margin: 0 25px 0 25px;
+    height: 1.5px;
+    box-shadow: 1px 3px 5px rgb(100, 100, 100);
 }
 
 .bookmarks-list {
     display: flex;
     flex-direction: column;
     padding-left: 10px;
+    margin: 10px 0 10px 20px;
     height: 90vh;
     overflow: scroll;
 }
