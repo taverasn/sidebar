@@ -37,7 +37,7 @@
         <hr>
         {% for topic in topics %}
             <a href="{% url 'detail' topic.id %}">
-                {{ topic.name }}
+                {{ topic.title }}
             </a>
         {% endfor %}
         <hr>

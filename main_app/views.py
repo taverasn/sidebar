@@ -7,82 +7,115 @@ from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+
 # from .forms import PostForm, CommentForm
-from .models import Account # , Topic, Post, Comment, Photo, Bookmark
+from .models import Account, Topic  # , Topic, Post, Comment, Photo, Bookmark
 from django.contrib.auth.models import User
 
-S3_BASE_URL = 'https://s3.us-east-2.amazonaws.com/'
-BUCKET = 'sidebar-aws'
+S3_BASE_URL = "https://s3.us-east-2.amazonaws.com/"
+BUCKET = "sidebar-aws"
+
 
 def signup(request):
-    error_message = ''
-    if request.method == 'POST':
+    error_message = ""
+    if request.method == "POST":
         form = UserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('/dashboard/accounts/create')
+            return redirect("/dashboard/accounts/create")
         else:
-            error_message = 'Invalid sign up - try again'
-    
+            error_message = "Invalid sign up - try again"
+
     form = UserCreationForm()
-    context = {'form': form, 'error_message': error_message}
-    return render(request, 'registration/signup.html', context)
+    context = {"form": form, "error_message": error_message}
+    return render(request, "registration/signup.html", context)
 
 
 def home(request):
-    return render(request, 'home.html')
+    return render(request, "home.html")
+
 
 # Account Views
 
+
 @login_required
 def dashboard_index(request):
-    return render(request, 'dashboard/index.html')
+    return render(request, "dashboard/index.html")
+
 
 @login_required
 def account_dashboard(request):
-    return render(request, 'dashboard/account.html')
+    return render(request, "dashboard/account.html")
 
 
 class AccountCreate(LoginRequiredMixin, CreateView):
     model = Account
-    fields = ['first_name', 'last_name', 'email', 'bio']
-    success_url = '/topics/'
+    fields = ["first_name", "last_name", "email", "bio"]
+    success_url = "/topics/"
+
     def form_valid(self, form):
         form.instance.user = self.request.user
 
         return super().form_valid(form)
 
+
 class AccountUpdate(LoginRequiredMixin, UpdateView):
     model = Account
-    fields = ['first_name', 'last_name', 'email', 'bio']
-    success_url = '/dashboard/'
+    fields = ["first_name", "last_name", "email", "bio"]
+    success_url = "/dashboard/"
+
 
 class AccountDelete(LoginRequiredMixin, DeleteView):
     model = Account
-    success_url = '/'
+    success_url = "/"
+
 
 # Topic Views
 
+
 @login_required
 def topics_index(request):
-    return render(request, 'topics/index.html')
+    return render(request, "topics/index.html")
+
 
 # @login_required
 # def topics_detail(request, topic_id):
 #     topic = Topic.objects.get(id=topic_id)
 #     post_form = PostForm()
-#     return render(request, 'topics/detail.html', {
-#         'topic': topic,
-#         'post_form': post_form,
-#     })
+#     return render(
+#         request,
+#         "topics/detail.html",
+#         {
+#             "topic": topic,
+#             "post_form": post_form,
+#         },
+#     )
+
 
 # class TopicList(LoginRequiredMixin, ListView):
 #     model = Topic
 
+
+class TopicCreate(LoginRequiredMixin, CreateView):
+    model = Topic
+    fields = "__all__"
+
+
 # class TopicCreate(LoginRequiredMixin, CreateView):
 #     model = Topic
-#     fields = '__all__'
+#     # fields = "__all__"
+#     fields = "__all__"
+#     #  can redirect like below, but it's better to add a return in Model
+#     # success_url = "/birds/"
+#     # override form_valid to attach the user to the cat before form data is saved
+#     def form_valid(self, form):
+#         # the bird data will be stored in 'form.instance'
+#         # self.request.user will be the currently logged in user
+#         form.instance.user = self.request.user
+#         # allowing CreateView parent class to handle the rest
+#         return super().form_valid(form)
+
 
 # class TopicUpdate(LoginRequiredMixin, UpdateView):
 #     model = Topic
@@ -149,7 +182,6 @@ def topics_index(request):
 #     return redirect('topic_detail', topic_id=topic_id)
 
 
-
 # Photo Views
 
 # @login_required
@@ -172,7 +204,7 @@ def topics_index(request):
 #             photo.save()
 #         except: print('An error occured uploading file to S3 AWS')
 #     return redirect('account_dashboard', user_id=user_id)
-    
+
 # @login_required
 # def topic_photo(request, topic_id):
 #     photo_file = request.FILES.get('photo_file', None)
