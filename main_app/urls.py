@@ -47,7 +47,7 @@ urlpatterns = [
         name="post_delete",
     ),
     # path('topics/<int:topic_id>/posts/<int:post_id>/post_photo/', views.post_photo, name='post_photo'),
-    # path('topics/<int:topic_id>/posts/<int:post_id>/add_comment/', views.add_comment, name='add_comment'),
-    # path('topics/<int:topic_id>/posts/<int:post_id>/comments/<int:pk>/update/', views.CommentUpdate.as_view(), name='comment_update'),
-    # path('topics/<int:topic_id>/posts/<int:post_id>/comments/<int:pk>/delete/', views.CommentDelete.as_view(), name='comment_delete'),
+    path('topics/<int:topic_id>/posts/<int:post_id>/add_comment/', views.add_comment, name='add_comment'),
+    path('topics/<int:topic_id>/posts/<int:post_id>/comments/<int:pk>/update/', views.CommentUpdate.as_view(), name='comment_update'),
+    path('topics/<int:topic_id>/posts/<int:post_id>/comments/<int:pk>/delete/', views.CommentDelete.as_view(), name='comment_delete'),
 ]
