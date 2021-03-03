@@ -7,132 +7,161 @@ from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-# from .forms import PostForm, CommentForm
-from .models import Account # , Topic, Post, Comment, Photo, Bookmark
+
+from .forms import PostForm, CommentForm
+from .models import Account, Topic, Post, Comment  # ,Photo, Bookmark
 from django.contrib.auth.models import User
 
-S3_BASE_URL = 'https://s3.us-east-2.amazonaws.com/'
-BUCKET = 'sidebar-aws'
+S3_BASE_URL = "https://s3.us-east-2.amazonaws.com/"
+BUCKET = "sidebar-aws"
+
 
 def signup(request):
-    error_message = ''
-    if request.method == 'POST':
+    error_message = ""
+    if request.method == "POST":
         form = UserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('/dashboard/accounts/create')
+            return redirect("/dashboard/accounts/create")
         else:
-            error_message = 'Invalid sign up - try again'
-    
+            error_message = "Invalid sign up - try again"
+
     form = UserCreationForm()
-    context = {'form': form, 'error_message': error_message}
-    return render(request, 'registration/signup.html', context)
+    context = {"form": form, "error_message": error_message}
+    return render(request, "registration/signup.html", context)
 
 
 def home(request):
-    return render(request, 'home.html')
+    return render(request, "home.html")
+
 
 # Account Views
 
+
 @login_required
 def dashboard_index(request):
-    return render(request, 'dashboard/index.html')
+    return render(request, "dashboard/index.html")
+
 
 @login_required
 def account_dashboard(request):
-    return render(request, 'dashboard/account.html')
+    return render(request, "dashboard/account.html")
 
 
 class AccountCreate(LoginRequiredMixin, CreateView):
     model = Account
-    fields = ['first_name', 'last_name', 'email', 'bio']
-    success_url = '/topics/'
+    fields = ["first_name", "last_name", "email", "bio"]
+    success_url = "/topics/"
+
     def form_valid(self, form):
         form.instance.user = self.request.user
 
         return super().form_valid(form)
 
+
 class AccountUpdate(LoginRequiredMixin, UpdateView):
     model = Account
-    fields = ['first_name', 'last_name', 'email', 'bio']
-    success_url = '/dashboard/'
+    fields = ["first_name", "last_name", "email", "bio"]
+    success_url = "/dashboard/"
+
 
 class AccountDelete(LoginRequiredMixin, DeleteView):
     model = Account
-    success_url = '/'
+    success_url = "/"
+
 
 # Topic Views
 
-@login_required
-def topics_index(request):
-    return render(request, 'topics/index.html')
 
 # @login_required
-# def topics_detail(request, topic_id):
-#     topic = Topic.objects.get(id=topic_id)
-#     post_form = PostForm()
-#     return render(request, 'topics/detail.html', {
-#         'topic': topic,
-#         'post_form': post_form,
-#     })
+# def topics_index(request):
+#     return render(request, "topics/index.html")
 
-# class TopicList(LoginRequiredMixin, ListView):
-#     model = Topic
 
-# class TopicCreate(LoginRequiredMixin, CreateView):
-#     model = Topic
-#     fields = '__all__'
+@login_required
+def topics_detail(request, topic_id):
+    topic = Topic.objects.get(id=topic_id)
+    post_form = PostForm()
+    return render(
+        request,
+        "topics/detail.html",
+        {
+            "topic": topic,
+            "post_form": post_form,
+        },
+    )
 
-# class TopicUpdate(LoginRequiredMixin, UpdateView):
-#     model = Topic
-#     fields = '__all__'
 
-# class TopicDelete(LoginRequiredMixin, DeleteView):
-#     model = Topic
-#     success_url = '/topics/'
+class TopicList(LoginRequiredMixin, ListView):
+    model = Topic
+
+
+class TopicCreate(LoginRequiredMixin, CreateView):
+    model = Topic
+    fields = ["title", "description"]
+
+
+class TopicUpdate(LoginRequiredMixin, UpdateView):
+    model = Topic
+    fields = ["title", "description"]
+
+
+class TopicDelete(LoginRequiredMixin, DeleteView):
+    model = Topic
+    success_url = "/topics/"
+
 
 # Post Views
 
-# @login_required
-# def add_post(request, topic_id):
-#     form = PostForm(request.POST)
-#     if form.is_valid():
-#         new_post = form.save(commit=False)
-#         new_post.topic_id = topic_id
-#         new_post.save()
-#     return redirect('topic_detail', topic_id=topic_id)
+
+@login_required
+def add_post(request, topic_id):
+    form = PostForm(request.POST)
+    if form.is_valid():
+        new_post = form.save(commit=False)
+        new_post.topic_id = topic_id
+        new_post.save()
+    return redirect("topics_detail", topic_id=topic_id)
 
 
-# class PostUpdate(LoginRequiredMixin, UpdateView):
-#     model = Post
-#     fields = '__all__'
+def post_detail(request, post_id):
+    post = Post.objects.get(id=post_id)
+    return render(request, "post/detail.html", {"post": post})
 
 
-# class PostDelete(LoginRequiredMixin, DeleteView):
-#     model = Post
-#     success_url = '/topics/'
+class PostUpdate(LoginRequiredMixin, UpdateView):
+    model = Post
+    fields = ["title", "description"]
+
+
+class PostDelete(LoginRequiredMixin, DeleteView):
+    model = Post
+    success_url = "/topics/"
+
 
 # Comment Views
 
-# @login_required
-# def add_comment(request, post_id):
-#     form = CommentForm(request.POST)
-#     if form.is_valid():
-#         new_comment = form.save(commit=False)
-#         new_comment.post_id = post_id
-#         new_comment.save()
-#     return redirect('post_detail', post_id=post_id)
+
+@login_required
+def add_comment(request, post_id):
+    form = CommentForm(request.POST)
+    if form.is_valid():
+        new_comment = form.save(commit=False)
+        new_comment.post_id = post_id
+        new_comment.save()
+    return redirect("post_detail", post_id=post_id)
 
 
-# class CommentUpdate(LoginRequiredMixin, UpdateView):
-#     model = Comment
-#     fields = '__all__'
+class CommentUpdate(LoginRequiredMixin, UpdateView):
+    model = Comment
+    fields = "__all__"
 
 
-# class CommentDelete(LoginRequiredMixin, DeleteView):
-#     model = Comment
-#     success_url = '/topics/'
+class CommentDelete(LoginRequiredMixin, DeleteView):
+    model = Comment
+    success_url = "/topics/"
+
 
 # Bookmark Views
 
@@ -147,7 +176,6 @@ def topics_index(request):
 #     Topic.objects.get(id=topic_id).bookmarks.delete(bookmark_id)
 #     User.objects.get(id=user_id).bookmarks.delete(bookmark_id)
 #     return redirect('topic_detail', topic_id=topic_id)
-
 
 
 # Photo Views
@@ -172,7 +200,7 @@ def topics_index(request):
 #             photo.save()
 #         except: print('An error occured uploading file to S3 AWS')
 #     return redirect('account_dashboard', user_id=user_id)
-    
+
 # @login_required
 # def topic_photo(request, topic_id):
 #     photo_file = request.FILES.get('photo_file', None)
