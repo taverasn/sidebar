@@ -31,7 +31,7 @@ class Post(models.Model):
         return f"{self.title}"
 
     def get_absolute_url(self):
-        return reverse("post_detail", kwargs={"pk": self.pk})
+        return reverse("post_detail", kwargs={"post_id": self.id, "topic_id": self.topic.id})
 
     class Meta:
         ordering = ["-created"]
@@ -40,6 +40,11 @@ class Comment(models.Model):
     created = models.DateTimeField(default=datetime.now, blank=True)
     text = models.TextField(max_length=250)
     post = models.ForeignKey(Post, on_delete=models.CASCADE, null=True)
+
+
+    def get_absolute_url(self):
+        return reverse("post_detail", kwargs={"topic_id": self.post.topic.id, "post_id": self.post.id})
+    
 
     def __str__(self):
         return f"{self.created}"

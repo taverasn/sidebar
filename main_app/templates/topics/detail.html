@@ -1,4 +1,5 @@
-{% extends 'base.html' %}
+<!-- {% extends 'base.html' %} -->
+{% extends 'topics_sidebar.html' %}
 
 {% block content %}
 
@@ -12,32 +13,13 @@
                 <h3>{{ topic.title }}</h3>
               </div>
               <div>
-                  <p>{{ topic.description }}</p>
+                  <p>{{ topic.body}}</p>
               </div>
               <div>
-                <div>
-
-                  <form action="{% url 'add_post' topic.id %}" method="POST">
-                    {% csrf_token %}
-                    {{ post_form.as_p }}
-                    <input type="submit" class="btn" value="Add Post">
-  
-                  </form>
-                </div>
-              <div>
-                <table>
-                  <thead><th><tr><th>Title</th></tr></thead>
-                  <tbody>
-                    {% for post in topic.post_set.all %}
-                      <tr><td>{{ post.title }}</td></tr>
-                      <tr><td>{{ post.description }}</td></tr>
-                    
-                    {% endfor %}
-
-                  </tbody>
-                </table>
-
-              </div>
+                {% for post in posts %}
+                    <p>{{ post.title }}</p>
+                
+                {% endfor %}
 
               </div>
               
@@ -46,23 +28,24 @@
         
     </div>
     <div class="col s3">
-        <!-- <h3>Bookmark:</h3>
+        <h3>Bookmark:</h3>
         <h3>Tags</h3>
         <div>
             {% for tag in tags %}
                     <p>{{ tag.title }}</p>
                 
             {% endfor %}
-        </div> -->
-        
+        </div>
+        <h3>Create Post</h3>
+
     </div>
 </div>
 
 
 
-<div class="">
+<!-- <div class="">
   <a href="{% url 'topic_update' topic.id %}">Edit</a>
   <a href="{% url 'topic_delete' topic.id %}">Delete</a>
-</div>
+</div> -->
 
 {% endblock %}
