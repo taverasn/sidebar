@@ -8,8 +8,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-# from .forms import PostForm, CommentForm
-from .models import Account, Topic  # , Topic, Post, Comment, Photo, Bookmark
+from .forms import PostForm, CommentForm
+from .models import Account, Topic, Post, Comment  # ,Photo, Bookmark
 from django.contrib.auth.models import User
 
 S3_BASE_URL = "https://s3.us-east-2.amazonaws.com/"
@@ -74,98 +74,94 @@ class AccountDelete(LoginRequiredMixin, DeleteView):
 # Topic Views
 
 
-@login_required
-def topics_index(request):
-    return render(request, "topics/index.html")
-
-
 # @login_required
-# def topics_detail(request, topic_id):
-#     topic = Topic.objects.get(id=topic_id)
-#     post_form = PostForm()
-#     return render(
-#         request,
-#         "topics/detail.html",
-#         {
-#             "topic": topic,
-#             "post_form": post_form,
-#         },
-#     )
+# def topics_index(request):
+#     return render(request, "topics/index.html")
 
 
-# class TopicList(LoginRequiredMixin, ListView):
-#     model = Topic
+@login_required
+def topics_detail(request, topic_id):
+    topic = Topic.objects.get(id=topic_id)
+    post_form = PostForm()
+    return render(
+        request,
+        "topics/detail.html",
+        {
+            "topic": topic,
+            "post_form": post_form,
+        },
+    )
+
+
+class TopicList(LoginRequiredMixin, ListView):
+    model = Topic
 
 
 class TopicCreate(LoginRequiredMixin, CreateView):
     model = Topic
-    fields = "__all__"
+    fields = ["title", "description"]
 
 
-# class TopicCreate(LoginRequiredMixin, CreateView):
-#     model = Topic
-#     # fields = "__all__"
-#     fields = "__all__"
-#     #  can redirect like below, but it's better to add a return in Model
-#     # success_url = "/birds/"
-#     # override form_valid to attach the user to the cat before form data is saved
-#     def form_valid(self, form):
-#         # the bird data will be stored in 'form.instance'
-#         # self.request.user will be the currently logged in user
-#         form.instance.user = self.request.user
-#         # allowing CreateView parent class to handle the rest
-#         return super().form_valid(form)
+class TopicUpdate(LoginRequiredMixin, UpdateView):
+    model = Topic
+    fields = ["title", "description"]
 
 
-# class TopicUpdate(LoginRequiredMixin, UpdateView):
-#     model = Topic
-#     fields = '__all__'
+class TopicDelete(LoginRequiredMixin, DeleteView):
+    model = Topic
+    success_url = "/topics/"
 
-# class TopicDelete(LoginRequiredMixin, DeleteView):
-#     model = Topic
-#     success_url = '/topics/'
 
 # Post Views
 
-# @login_required
-# def add_post(request, topic_id):
-#     form = PostForm(request.POST)
-#     if form.is_valid():
-#         new_post = form.save(commit=False)
-#         new_post.topic_id = topic_id
-#         new_post.save()
-#     return redirect('topic_detail', topic_id=topic_id)
+
+@login_required
+def add_post(request, topic_id):
+    form = PostForm(request.POST)
+    if form.is_valid():
+        new_post = form.save(commit=False)
+        new_post.topic_id = topic_id
+        new_post.save()
+    return redirect("topics_detail", topic_id=topic_id)
 
 
-# class PostUpdate(LoginRequiredMixin, UpdateView):
-#     model = Post
-#     fields = '__all__'
+def post_detail(request, post_id):
+    post = Post.objects.get(id=post_id)
+    return render(request, "post/detail.html", {"post": post})
 
 
-# class PostDelete(LoginRequiredMixin, DeleteView):
-#     model = Post
-#     success_url = '/topics/'
+class PostUpdate(LoginRequiredMixin, UpdateView):
+    model = Post
+    fields = ["title", "description"]
+
+
+class PostDelete(LoginRequiredMixin, DeleteView):
+    model = Post
+    success_url = "/topics/"
+
 
 # Comment Views
 
-# @login_required
-# def add_comment(request, post_id):
-#     form = CommentForm(request.POST)
-#     if form.is_valid():
-#         new_comment = form.save(commit=False)
-#         new_comment.post_id = post_id
-#         new_comment.save()
-#     return redirect('post_detail', post_id=post_id)
+
+@login_required
+def add_comment(request, post_id):
+    form = CommentForm(request.POST)
+    if form.is_valid():
+        new_comment = form.save(commit=False)
+        new_comment.post_id = post_id
+        new_comment.save()
+    return redirect("post_detail", post_id=post_id)
 
 
-# class CommentUpdate(LoginRequiredMixin, UpdateView):
-#     model = Comment
-#     fields = '__all__'
+class CommentUpdate(LoginRequiredMixin, UpdateView):
+    model = Comment
+    fields = "__all__"
 
 
-# class CommentDelete(LoginRequiredMixin, DeleteView):
-#     model = Comment
-#     success_url = '/topics/'
+class CommentDelete(LoginRequiredMixin, DeleteView):
+    model = Comment
+    success_url = "/topics/"
+
 
 # Bookmark Views
 

@@ -37,13 +37,13 @@ class Topic(models.Model):
     created = models.DateTimeField(default=datetime.now, blank=True)
     title = models.CharField(max_length=50)
     description = models.TextField(max_length=500)
-    # post = models.ForeignKey(Post, on_delete=models.CASCADE, null=True)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return f"{self.title}"
 
     def get_absolute_url(self):
-        return reverse("topic_detail", kwargs={"pk": self.id})
+        return reverse("topics_detail", kwargs={"topic_id": self.id})
 
     class Meta:
         ordering = ["-created"]

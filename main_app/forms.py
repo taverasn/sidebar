@@ -6,10 +6,10 @@ from .models import Post, Comment
 class PostForm(ModelForm):
     class Meta:
         model = Post
-        fields = '__all__'
+        fields = ["title", "description"]
 
 
 class CommentForm(ModelForm):
     class Meta:
         model = Comment
-        fields = '__all__'
+        fields = "__all__"
