@@ -1,6 +1,6 @@
 import uuid
 import boto3
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponseRedirect, get_object_or_404
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
 from django.contrib.auth import login
@@ -125,9 +125,11 @@ def add_post(request, topic_id):
     return redirect("topics_detail", topic_id=topic_id)
 
 
-def post_detail(request, post_id):
+def post_detail(request, topic_id, post_id):
+    topic = Topic.objects.get(id=topic_id)
     post = Post.objects.get(id=post_id)
-    return render(request, "post/detail.html", {"post": post})
+    comment_form = CommentForm()
+    return render(request, "post/detail.html", {"post": post, "topic": topic, "comment_form": comment_form})
 
 
 class PostUpdate(LoginRequiredMixin, UpdateView):
@@ -140,22 +142,23 @@ class PostDelete(LoginRequiredMixin, DeleteView):
     success_url = "/topics/"
 
 
+
 # Comment Views
 
 
 @login_required
-def add_comment(request, post_id):
+def add_comment(request, topic_id, post_id):
     form = CommentForm(request.POST)
     if form.is_valid():
         new_comment = form.save(commit=False)
         new_comment.post_id = post_id
         new_comment.save()
-    return redirect("post_detail", post_id=post_id)
+    return redirect("post_detail", topic_id=topic_id, post_id=post_id)
 
 
 class CommentUpdate(LoginRequiredMixin, UpdateView):
     model = Comment
-    fields = "__all__"
+    fields = ['text']
 
 
 class CommentDelete(LoginRequiredMixin, DeleteView):
