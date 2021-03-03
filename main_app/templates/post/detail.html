@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content%}
+
+<h1>{{post.title}}</h1>
+<p>{{post.description}} </p>
+
+<div>
+    <a href="{% url 'topic_update' topic.id %}">Edit</a>
+    <a href="{% url 'topic_delete' topic.id %}">Delete</a>
+</div>
+
+
+{% end block %}
+
