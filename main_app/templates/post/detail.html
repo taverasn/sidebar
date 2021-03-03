@@ -6,10 +6,33 @@
 <p>{{post.description}} </p>
 
 <div>
-    <a href="{% url 'topic_update' topic.id %}">Edit</a>
-    <a href="{% url 'topic_delete' topic.id %}">Delete</a>
+    <a href="{% url 'post_update' topic.id post.id %}">Edit</a>
+    <a href="{% url 'post_delete' topic.id post.id %}">Delete</a>
+</div>
+<div>
+    <div>
+        <form action="{% url 'add_comment' topic.id post.id %}" method="POST">
+        {% csrf_token %}
+        {{ comment_form.as_p }}
+        <input type="submit" class="btn" value="Add Comment">
+
+        </form>
+    </div>
+    <div>
+        <table>
+            <thead><th><tr><th>Title</th><th>Edit</th>Delete<th></th></tr></thead>
+            <tbody>
+            {% for comment in post.comment_set.all %}
+                <tr>
+                    <td>{{ comment.text }}</td>
+                    <td><a href="{% url 'comment_update' topic.id post.id comment.id %}">Edit</a></td>
+                    <td><a href="{% url 'comment_delete' topic.id post.id comment.id %}">Delete</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    <div>
 </div>
 
-
-{% end block %}
+{% endblock %}
 
