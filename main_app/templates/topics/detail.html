@@ -30,6 +30,7 @@
                   <tbody>
                     {% for post in topic.post_set.all %}
                       <tr><td>{{ post.title }}</td></tr>
+                      <tr><td>{{ post.description }}</td></tr>
                     
                     {% endfor %}
 
