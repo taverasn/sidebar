@@ -1,5 +1,4 @@
-<!-- {% extends 'base.html' %} -->
-{% extends 'topics_sidebar.html' %}
+{% extends 'base.html' %}
 
 {% block content %}
   {% if object %}
@@ -19,22 +18,22 @@
 
    
       <!-- add photo to post Would 'post' be the model name?-->
-      {% for photo in post.photo_set.all %}
+      {% comment %} {% for photo in post.photo_set.all %}
         <img src="{{ photo.url }}" alt="{{ photo.url }}" class="responsive-img card-panel">
       {% empty %}
         <div class="card-panel center-align">No photos uploaded</div>
-      {% endfor%}
+      {% endfor%} {% endcomment %}
   
       <!-- add photo form Would 'post' be the model name?-->
-      <form action="{% url 'add_photo' post.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
+      {% comment %} <form action="{% url 'add_photo' post.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
         {% csrf_token %}
         <input type="file" name="photo-file">
         <br><br>
         <input type="submit" class="btn" value="Upload Photo">
-      </form>
+      </form> {% endcomment %}
   
     </div>
-    <input type="submit" value="Create Post!" class="btn">
+    <input type="submit" value="Submit!" class="btn">
   </form>
 
   

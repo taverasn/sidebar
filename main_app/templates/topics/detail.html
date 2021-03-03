@@ -29,7 +29,7 @@
                   <thead><th><tr><th>Title</th></tr></thead>
                   <tbody>
                     {% for post in topic.post_set.all %}
-                      <tr><td>{{ post.title }}</td></tr>
+                      <tr><td><a href="{% url 'post_detail' topic.id post.id %}">{{ post.title }}</a></td></tr>
                     
                     {% endfor %}
 
