@@ -1,18 +1,20 @@
 {% extends 'base.html' %}
 
 {% block content %}
+
+<div class="headline">
   {% if object %}
     <h1>Edit {{object.title}}</h1>
+    <a class="btn" href="{% url 'topics_detail' topic.id %}">Back To Topic</a>
   {% else %}
     <h1>Add Topic</h1>
+    <a class="btn" href="{% url 'topics_index' %}">Back to Topics</a>
   {% endif %}
+</div>
 
-  <!-- Leaving the action empty makes the form post to the same url used to display it -->
   <form action="" method="post">
-    <!-- Django requires the following for security purposes -->
     {% csrf_token %}
     <table>
-      <!-- Render the inputs inside of <tr>s & <td>s -->
       {{ form.as_table }}
     </table>
     <hr>
