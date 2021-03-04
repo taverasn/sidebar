@@ -92,7 +92,6 @@ def topics_detail(request, topic_id):
         },
     )
 
-
 class TopicList(LoginRequiredMixin, ListView):
     model = Topic
 
@@ -100,6 +99,9 @@ class TopicList(LoginRequiredMixin, ListView):
 class TopicCreate(LoginRequiredMixin, CreateView):
     model = Topic
     fields = ["title", "description"]
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
 
 
 class TopicUpdate(LoginRequiredMixin, UpdateView):
@@ -116,11 +118,12 @@ class TopicDelete(LoginRequiredMixin, DeleteView):
 
 
 @login_required
-def add_post(request, topic_id):
+def add_post(request, user_id, topic_id):
     form = PostForm(request.POST)
     if form.is_valid():
         new_post = form.save(commit=False)
         new_post.topic_id = topic_id
+        new_post.user_id = user_id
         new_post.save()
     return redirect("topics_detail", topic_id=topic_id)
 
@@ -130,7 +133,6 @@ def post_detail(request, topic_id, post_id):
     post = Post.objects.get(id=post_id)
     comment_form = CommentForm()
     return render(request, "post/detail.html", {"post": post, "topic": topic, "comment_form": comment_form})
-
 
 class PostUpdate(LoginRequiredMixin, UpdateView):
     model = Post
@@ -147,11 +149,12 @@ class PostDelete(LoginRequiredMixin, DeleteView):
 
 
 @login_required
-def add_comment(request, topic_id, post_id):
+def add_comment(request, user_id, topic_id, post_id):
     form = CommentForm(request.POST)
     if form.is_valid():
         new_comment = form.save(commit=False)
         new_comment.post_id = post_id
+        new_comment.user_id = user_id
         new_comment.save()
     return redirect("post_detail", topic_id=topic_id, post_id=post_id)
 
