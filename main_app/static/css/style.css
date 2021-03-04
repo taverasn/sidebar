@@ -309,6 +309,7 @@ opacity: 0.9;
 
 .description {
     overflow-wrap: break-word;
+    padding-left: 20px;
 }
 
 .btn {
@@ -325,4 +326,46 @@ opacity: 0.9;
 
 .form-container {
     margin-bottom: 25px;
+}
+
+.title {
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.title-headline {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+}
+
+.title-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-bottom: 10px;
+}
+
+.created-by {
+    color: rgb(128, 128, 128);
+    font-style: italic;
+    font-size: small;
+}
+
+.prefix {
+    color: var(--test-color-4);
+    font-style: italic;
+    font-size: large;
+}
+
+.card-rule {
+    height: 1.5px;
+    width: 100%;
+    background-color: var(--test-color-4);
+    margin-bottom: 15px;
+}
+
+.title-divider {
+    margin-left: 15px;
+    margin-right: 15px;
 }
