@@ -133,7 +133,6 @@ def post_detail(request, topic_id, post_id):
     comment_form = CommentForm()
     return render(request, "post/detail.html", {"post": post, "topic": topic, "comment_form": comment_form})
 
-
 class PostUpdate(LoginRequiredMixin, UpdateView):
     model = Post
     fields = ["title", "description"]
