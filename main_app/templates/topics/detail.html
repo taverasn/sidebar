@@ -4,13 +4,13 @@
 
 <div class="headline">
   <a class="btn" href="{% url 'topics_index' %}">Back to Topics</a>
-  <h3>{{ topic.title }}</h3>
+  <h1>{{ topic.title }}</h1>
   <div class="headline-links">
     <a class="btn" href="{% url 'topic_update' topic.id %}">Edit</a>
     <a class="btn" href="{% url 'topic_delete' topic.id %}">Delete</a>
   </div>
 </div>
-<div class="description">
+<div class="description-container">
   <p>{{ topic.description }}</p>
 </div>
 <div>
