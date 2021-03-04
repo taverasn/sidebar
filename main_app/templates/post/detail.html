@@ -2,19 +2,22 @@
 
 {% block content%}
 
-<h1>{{post.title}}</h1>
-<p>{{post.description}} </p>
 
-<div>
-    <a href="{% url 'post_update' topic.id post.id %}">Edit</a>
-    <a href="{% url 'post_delete' topic.id post.id %}">Delete</a>
+<div class="headline">
+    <a class="btn" href="{% url 'topics_detail' topic.id %}">Back To Topic</a>
+    <h1>{{post.title}}</h1>
+    <div class="headline-links">
+        <a class="btn" href="{% url 'post_update' topic.id post.id %}">Edit</a>
+        <a class="btn" href="{% url 'post_delete' topic.id post.id %}">Delete</a>
+    </div>
 </div>
+<p>{{post.description}}</p>
 <div>
-    <div>
+    <div class="form-container">
         <form action="{% url 'add_comment' topic.id post.id %}" method="POST">
-        {% csrf_token %}
-        {{ comment_form.as_p }}
-        <input type="submit" class="btn" value="Add Comment">
+            {% csrf_token %}
+            {{ comment_form.as_p }}
+            <input type="submit" class="btn" value="Add Comment">
         </form>
     </div>
     <div class="page-content">
@@ -24,8 +27,8 @@
                     <p>{{ comment.text }}</p>
                 </div>
                 <div class="card-action link-container">
-                    <a href="{% url 'comment_update' topic.id post.id comment.id %}">Edit</a>
-                    <a href="{% url 'comment_delete' topic.id post.id comment.id %}">Delete</a>
+                    <a style="color: #f77f00;" href="{% url 'comment_update' topic.id post.id comment.id %}">Edit</a>
+                    <a style="color: #f77f00;" href="{% url 'comment_delete' topic.id post.id comment.id %}">Delete</a>
                 </div>
             </div>
             {% endfor %}
