@@ -15,22 +15,23 @@
         {% csrf_token %}
         {{ comment_form.as_p }}
         <input type="submit" class="btn" value="Add Comment">
-
         </form>
     </div>
-    <div>
-        <table>
-            <thead><th><tr><th>Title</th><th>Edit</th>Delete<th></th></tr></thead>
-            <tbody>
-            {% for comment in post.comment_set.all %}
-                <tr>
-                    <td>{{ comment.text }}</td>
-                    <td><a href="{% url 'comment_update' topic.id post.id comment.id %}">Edit</a></td>
-                    <td><a href="{% url 'comment_delete' topic.id post.id comment.id %}">Delete</a></td>
-                </tr>
+    <div class="page-content">
+        {% for comment in post.comment_set.all %}
+            <div class="card">
+                <div class=" card-content">
+                    <p>{{ comment.text }}</p>
+                </div>
+                <div class="card-action link-container">
+                    <a href="{% url 'comment_update' topic.id post.id comment.id %}">Edit</a>
+                    <a href="{% url 'comment_delete' topic.id post.id comment.id %}">Delete</a>
+                </div>
+            </div>
             {% endfor %}
-            </tbody>
-        </table>
+
+    </div>
+    <div>
     <div>
 </div>
 
