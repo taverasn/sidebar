@@ -92,7 +92,6 @@ def topics_detail(request, topic_id):
         },
     )
 
-
 class TopicList(LoginRequiredMixin, ListView):
     model = Topic
 
@@ -100,6 +99,9 @@ class TopicList(LoginRequiredMixin, ListView):
 class TopicCreate(LoginRequiredMixin, CreateView):
     model = Topic
     fields = ["title", "description"]
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
 
 
 class TopicUpdate(LoginRequiredMixin, UpdateView):
