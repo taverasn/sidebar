@@ -3,6 +3,7 @@
 {% block content %}
 
 <div class="headline">
+  <a class="btn" href="{% url 'topics_index' %}">Back to Topics</a>
   <h3>{{ topic.title }}</h3>
   <div class="headline-links">
     <a class="btn" href="{% url 'topic_update' topic.id %}">Edit</a>
@@ -13,7 +14,7 @@
   <p>{{ topic.description }}</p>
 </div>
 <div>
-  <div class="inpage-form">
+  <div class="form-container">
     <form action="{% url 'add_post' topic.id %}" method="POST">
       {% csrf_token %}
       {{ post_form.as_p }}
