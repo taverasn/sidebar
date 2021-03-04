@@ -221,7 +221,7 @@ opacity: 0.9;
     width: 219px;
     height: 100vh;
     background-color: var(--test-color-4);
-    box-shadow: 2px 0 6px 3px var(--shadow);
+    box-shadow: .25px 0 9px 1px var(--shadow);
     border-right: 1.5px solid var(--test-color-1);
 }
 
@@ -254,7 +254,7 @@ opacity: 0.9;
     height: 90vh;
     overflow: scroll;
     background-color: var(--test-color-2);
-    box-shadow: inset 0px 4px 3px var(--shadow), inset 0px -4px 3px var(--shadow);
+    box-shadow: inset 0px 4px 2px var(--shadow), inset 0px -4px 2px var(--shadow);
     color: black;
 }
 
@@ -312,6 +312,18 @@ opacity: 0.9;
 .description {
     overflow-wrap: break-word;
     padding-left: 55px;
+    padding-right: 55px;
+    color: var(--accent-alt-background-color);
+    font-style: italic;
+}
+
+.description-container {
+    overflow-wrap: break-word;
+    padding-left: 55px;
+    padding-right: 55px;
+    background-color: white;
+    border: 3px solid var(--test-color-4);
+    border-radius: 10px;
 }
 
 .btn {
@@ -361,7 +373,7 @@ opacity: 0.9;
 }
 
 .card-rule {
-    height: 1.5px;
+    height: 2px;
     width: 100%;
     background-color: var(--test-color-4);
     margin-bottom: 15px;
