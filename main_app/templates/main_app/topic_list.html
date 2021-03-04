@@ -10,7 +10,15 @@
         <a class="card-link" href="{% url 'topics_detail' topic.id %}">
             <div class="card topic">
                 <div class=" card-content">
-                    <span class="card-title">{{ topic.title }}</span>
+                    <div class="title-headline">
+                        <div class="title-container">
+                            <span class="prefix">/SB/ &nbsp;</span>
+                            <span class="title">{{ topic.title }}</span>
+                            <span class="title-divider">▶︎</span>
+                            <span class="created-by">Posted By: {{ topic.user }} @ {{topic.created }}</span>
+                        </div>
+                        <div class="card-rule"></div>
+                    </div>
                     <p class="description">{{ topic.description }}</p>
                 </div>
             </div>
