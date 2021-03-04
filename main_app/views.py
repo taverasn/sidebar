@@ -223,7 +223,7 @@ class CommentDelete(LoginRequiredMixin, DeleteView):
 #             photo = Photo(url=url, topic_id=topic_id)
 #             photo.save()
 #         except: print('An error occured uploading file to S3 AWS')
-#     return redirect('topic_detail', topic_id=topic_id)
+#     return redirect('topics_detail', topic_id=topic_id)
 
 # @login_required
 # def post_photo(request, topic_id, post_id):
