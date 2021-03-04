@@ -57,10 +57,10 @@
     <main class="base-main">
         {% block content %}
         {% endblock %}
+        <footer class="base-footer">
+            <div>All Rights Reserved, &copy; <span id="year"></span> Project Django</div> 
+        </footer>
     </main>
-    <footer class="base-footer">
-        <div>All Rights Reserved, &copy; <span id="year"></span> Project Django</div> 
-    </footer>
     <script>
         const spanEl = document.getElementById('year');
         spanEl.innerText = new Date().getFullYear();
