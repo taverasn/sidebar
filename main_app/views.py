@@ -118,11 +118,12 @@ class TopicDelete(LoginRequiredMixin, DeleteView):
 
 
 @login_required
-def add_post(request, topic_id):
+def add_post(request, user_id, topic_id):
     form = PostForm(request.POST)
     if form.is_valid():
         new_post = form.save(commit=False)
         new_post.topic_id = topic_id
+        new_post.user_id = user_id
         new_post.save()
     return redirect("topics_detail", topic_id=topic_id)
 
@@ -148,11 +149,12 @@ class PostDelete(LoginRequiredMixin, DeleteView):
 
 
 @login_required
-def add_comment(request, topic_id, post_id):
+def add_comment(request, user_id, topic_id, post_id):
     form = CommentForm(request.POST)
     if form.is_valid():
         new_comment = form.save(commit=False)
         new_comment.post_id = post_id
+        new_comment.user_id = user_id
         new_comment.save()
     return redirect("post_detail", topic_id=topic_id, post_id=post_id)
 
