@@ -7,9 +7,9 @@
     <div class="card-content">
         <h1>{{ user.account.first_name }}</h1>
         <h3>{{ user.account.bio }}</h3>
-        <div class="card-action">
-            <a href="{% url 'account_update' user.account.user_id %}">Edit</a>
-            <a href="{% url 'account_delete' user.account.user_id %}">Delete</a>
+        <div class="card-action link-container">
+            <a style="color: #f77f00;" href="{% url 'account_update' user.account.user_id %}">Edit</a>
+            <a style="color: #f77f00;" href="{% url 'account_delete' user.account.user_id %}">Delete</a>
         </div>
     </div>
 </div>
