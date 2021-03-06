@@ -1,19 +1,34 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>Topic Index</h1>
-
-<a href="{% url 'topic_create' %} "><span>Create</span></a>
-{% for topic in topic_list %}
-
-<a href="{% url 'topics_detail' topic.id %}">
-    <div class="card">
-        <div class=" card-content">
-            <span class="card-title">{{ topic.title }}</span>
-        </div>
-    </div>
-</a>
-{% endfor %}
-
+<div class="headline">
+    <h1>Topic Index</h1>
+    <a class="btn" href="{% url 'topic_create' %} "><span>Create</span></a>
+</div>
+<div class="list">
+    {% for topic in topic_list %}
+        <a class="card-link" href="{% url 'topics_detail' topic.id %}">
+            <div class="card topic">
+                <div class=" card-content">
+                    <div class="title-headline">
+                        <div class="title-container">
+                            <span class="prefix">&nbsp; / {{ topic.user_id }} / &nbsp; &nbsp;</span>
+                            <span class="title">{{ topic.title }}</span>
+                            <span class="title-divider">▶︎</span>
+                            <span class="created-by">Posted By: {{ topic.user }} @ {{topic.created }}</span>
+                        </div>
+                        <div class="card-rule"></div>
+                    </div>
+                    <p class="description">{{ topic.description }}</p>
+                    <div class="info-line">
+                        {% for post in post_list %}
+                        <span>{{ post.count }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </a>
+    {% endfor %}
+</div>
 
 {% endblock %}
