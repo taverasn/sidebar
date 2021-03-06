@@ -5,6 +5,10 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from datetime import datetime
 
+class Bookmark(models.Model):
+    
+    def __str__(self):
+        return f"{self.bookmark}"
 
 class Account(models.Model):
     first_name = models.CharField(max_length=50)
@@ -12,6 +16,7 @@ class Account(models.Model):
     email = models.CharField(max_length=50)
     bio = models.CharField(max_length=300)
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    bookmark = models.ManyToManyField(Bookmark)
 
     def __str__(self):
         return f"{self.last_name} {self.last_name}"
@@ -21,6 +26,7 @@ class Topic(models.Model):
     created = models.DateTimeField(default=datetime.now, blank=True)
     title = models.CharField(max_length=50)
     description = models.TextField(max_length=500)
+    bookmark = models.ManyToManyField(Bookmark)
 
     def __str__(self):
         return f"{self.title}"
@@ -72,13 +78,6 @@ def create_user_account(sender, instance, created, **kwargs):
 @receiver(post_save, sender=User)
 def save_user_account(sender, instance, **kwargs):
     instance.account.save()
-
-class Bookmark(models.Model):
-    bookmark = models.ManyToManyField(Topic)
-    account = models.ManyToManyField(Account)
-
-    def __str__(self):
-        return f"{self.bookmark}"
 
 class AccountPhoto(models.Model):
     url = models.CharField(max_length=200)
