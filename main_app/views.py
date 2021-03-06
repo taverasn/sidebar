@@ -1,5 +1,6 @@
 import uuid
 import boto3
+from django.utils.html import format_html
 from django.shortcuts import render, redirect, HttpResponseRedirect, get_object_or_404
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
@@ -9,7 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .forms import PostForm, CommentForm
-from .models import Account, Topic, Post, Comment  # ,Photo, Bookmark
+from .models import Account, Topic, Post, Comment  # ,Photo
 from django.contrib.auth.models import User
 
 S3_BASE_URL = "https://s3.us-east-2.amazonaws.com/"
@@ -171,17 +172,15 @@ class CommentDelete(LoginRequiredMixin, DeleteView):
 
 # Bookmark Views
 
-# @login_required
-# def bookmark_topic(request, topic_id, user_id, bookmark_id):
-#     Topic.objects.get(id=topic_id).bookmarks.add(bookmark_id)
-#     User.objects.get(id=user_id).bookmarks.add(bookmark_id)
-#     return redirect('topic_detail', topic_id=topic_id)
+@login_required
+def bookmark_topic(request, topic_id, user_id):
+    Account.objects.get(user_id=user_id).bookmarks.add(topic_id)
+    return redirect('topics_detail', topic_id=topic_id)
 
-# @login_required
-# def unbookmark_topic(request, topic_id, user_id, bookmark_id):
-#     Topic.objects.get(id=topic_id).bookmarks.delete(bookmark_id)
-#     User.objects.get(id=user_id).bookmarks.delete(bookmark_id)
-#     return redirect('topic_detail', topic_id=topic_id)
+@login_required
+def unbookmark_topic(request, topic_id, user_id):
+    Account.objects.get(user_id=user_id).bookmarks.remove(topic_id)
+    return redirect('topics_detail', topic_id=topic_id)
 
 
 # Photo Views
