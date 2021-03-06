@@ -28,8 +28,8 @@ urlpatterns = [
     path("topics/<int:pk>/update/", views.TopicUpdate.as_view(), name="topic_update"),
     path("topics/<int:pk>/delete/", views.TopicDelete.as_view(), name="topic_delete"),
     # path('topics/<int:topic_id>/topic_photo/', views.topic_photo, name='topic_photo'),
-    # path('topics/<int:topic_id>/bookmark_topic/<int:user_id>/', views.bookmark_topic, name='bookmark_topic'),
-    # path('topics/<int:topic_id>/unbookmark_topic/<int:user_id>/', views.unbookmark_topic, name='unbookmark_topic'),
+    path('topics/<int:topic_id>/bookmark_topic/<int:user_id>/', views.bookmark_topic, name='bookmark_topic'),
+    path('topics/<int:topic_id>/unbookmark_topic/<int:user_id>/', views.unbookmark_topic, name='unbookmark_topic'),
     path("topics/<int:user_id>/<int:topic_id>/add_post/", views.add_post, name="add_post"),
     path(
         "topics/<int:topic_id>/posts/<int:post_id>/",
