@@ -31,6 +31,7 @@ class Account(models.Model):
 
     def __str__(self):
         return f"{self.last_name} {self.last_name}"
+    
 
 
 class Post(models.Model):

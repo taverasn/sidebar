@@ -41,9 +41,8 @@ def home(request):
 
 
 @login_required
-def dashboard_index(request, user_id):
-    account = Account.objects.get(user_id=user_id)
-    return render(request, "dashboard/index.html", {"account": account})
+def dashboard_index(request):
+    return render(request, "dashboard/index.html")
 
 
 @login_required
@@ -67,7 +66,6 @@ class AccountUpdate(LoginRequiredMixin, UpdateView):
     model = Account
     fields = ["first_name", "last_name", "email", "bio"]
     success_url = "/dashboard/"
-
 
 class AccountDelete(LoginRequiredMixin, DeleteView):
     model = Account
@@ -258,7 +256,7 @@ def post_photo(request, topic_id, post_id):
 
             url = f"{S3_BASE_URL}{BUCKET}/{key}"
 
-            photo = Photo(url=url, topic_id=topic_id, post_id=post_id)
+            photo = Photo(url=url, post_id=post_id)
             photo.save()
         except:
             print("An error occured uploading file to S3 AWS")

@@ -4,7 +4,7 @@ from . import views
 urlpatterns = [
     path("", views.home, name="home"),
     path("accounts/signup/", views.signup, name="signup"),
-    path("dashboard/<int:user_id>", views.dashboard_index, name="dashboard_index"),
+    path("dashboard/", views.dashboard_index, name="dashboard_index"),
     path(
         "dashboard/<int:user_id>/accounts/",
         views.account_dashboard,
@@ -16,12 +16,12 @@ urlpatterns = [
         name="account_create",
     ),
     path(
-        "dashboard/accounts/<int:pk>/update/",
+        "dashboard/<int:pk>/accounts/update/",
         views.AccountUpdate.as_view(),
         name="account_update",
     ),
     path(
-        "dashboard/accounts/<int:pk>/delete/",
+        "dashboard/<int:pk>/accounts/delete/",
         views.AccountDelete.as_view(),
         name="account_delete",
     ),

@@ -26,8 +26,8 @@
             </form>
         </div>
         <div class="card-action link-container">
-            <a style="color: #f77f00;" href="{% url 'account_update' user.account.user_id %}">Edit</a>
-            <a style="color: #f77f00;" href="{% url 'account_delete' user.account.user_id %}">Delete</a>
+            <a style="color: #f77f00;" href="{% url 'account_update' user.id %}">Edit</a>
+            <a style="color: #f77f00;" href="{% url 'account_delete' user.id %}">Delete</a>
         </div>
     </div>
 </div>
