@@ -21,9 +21,7 @@
                     </div>
                     <p class="description">{{ topic.description }}</p>
                     <div class="info-line">
-                        {% for post in post_list %}
-                        <span>{{ post.count }}</span>
-                        {% endfor %}
+                        <span>{{ topic.post_set.count }}</span>
                     </div>
                 </div>
             </div>
