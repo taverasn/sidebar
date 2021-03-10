@@ -26,4 +26,8 @@ urlpatterns = [
     path("topics/<int:user_id>/<int:topic_id>/posts/<int:post_id>/add_comment/", views.add_comment, name="add_comment"),
     path("topics/<int:topic_id>/posts/<int:post_id>/comments/<int:pk>/update/", views.CommentUpdate.as_view(), name="comment_update"),
     path("topics/<int:topic_id>/posts/<int:post_id>/comments/<int:pk>/delete/", views.CommentDelete.as_view(), name="comment_delete"),
+    path("topics/<int:topic_id>/posts/<int:post_id>/comments/<int:comment_id>/like/<int:user_id>/", views.like_comment, name="like_comment"),
+    path("topics/<int:topic_id>/posts/<int:post_id>/comments/<int:comment_id>/dislike/<int:user_id>/", views.dislike_comment, name="dislike_comment"),
+    path("topics/<int:topic_id>/posts/<int:post_id>/comments/<int:comment_id>/unlike/<int:user_id>/", views.unlike_comment, name="unlike_comment"),
+    path("topics/<int:topic_id>/posts/<int:post_id>/comments/<int:comment_id>/undislike/<int:user_id>/", views.undislike_comment, name="undislike_comment"),
 ]

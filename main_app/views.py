@@ -175,6 +175,23 @@ class CommentDelete(LoginRequiredMixin, DeleteView):
     model = Comment
     success_url = "/topics/"
 
+# Comment Like Views
+
+def like_comment(request, topic_id, post_id, comment_id, user_id):
+    Comment.objects.get(id=comment_id).likes.add(user_id)
+    return redirect("post_detail", topic_id=topic_id, post_id=post_id)
+
+def dislike_comment(request, topic_id, post_id, comment_id, user_id):
+    Comment.objects.get(id=comment_id).dislikes.add(user_id)
+    return redirect("post_detail", topic_id=topic_id, post_id=post_id)
+
+def unlike_comment(request, topic_id, post_id, comment_id, user_id):
+    Comment.objects.get(id=comment_id).likes.remove(user_id)
+    return redirect("post_detail", topic_id=topic_id, post_id=post_id)
+
+def undislike_comment(request, topic_id, post_id, comment_id, user_id):
+    Comment.objects.get(id=comment_id).dislikes.remove(user_id)
+    return redirect("post_detail", topic_id=topic_id, post_id=post_id)
 
 # Bookmark Views
 
