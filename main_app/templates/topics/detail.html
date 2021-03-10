@@ -13,11 +13,15 @@
   </div>
 </div>
 <div>
-  {% for photo in topic.topicphoto_set.all %}
-  {% if photo.id == 1 %}
+  {% with topic.topicphoto_set.all as photos %}
+  {% for photo in photos %}
+  {% if photo == photos.first %}
   <img src="{{ photo.url }}" alt="{{ photo.url }}" class="responsive-img card-panel">
   {% endif %}
+  {% empty %}
+  <div>No topic photo</div>
   {% endfor %}
+  {% endwith %}
   <form action="{% url 'topic_photo' topic.id%}"
       enctype="multipart/form-data"
       method="POST">

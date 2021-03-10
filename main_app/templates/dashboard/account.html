@@ -10,13 +10,15 @@
             <h3>{{ user.account.bio }}</h3>
         </div>
         <div>
-            {% for photo in user.accountphoto_set.all %}
-            {% if photo.id == 1 %}
+            {% with user.accountphoto_set.all as photos  %}
+            {% for photo in photos %}
+            {% if photo == photos.first %}
             <img src="{{ photo.url }}" alt="{{ photo.url }}" class="responsive-img card-panel">
             {% endif %}
             {% empty %}
             <div>No account photo</div>
             {% endfor %}
+            {% endwith %}
             <form action="{% url 'account_photo' user.id%}"
                 enctype="multipart/form-data"
                 method="POST">
