@@ -40,6 +40,8 @@ class Post(models.Model):
     title = models.CharField(max_length=50)
     description = models.TextField(max_length=500)
     topic = models.ForeignKey(Topic, on_delete=models.CASCADE, null=True)
+    upvotes = models.ManyToManyField(Account, related_name="upvotes")
+    downvotes = models.ManyToManyField(Account, related_name="downvotes")
 
     def __str__(self):
         return f"{self.title}"
