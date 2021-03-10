@@ -130,7 +130,7 @@ def add_post(request, user_id, topic_id):
         new_post.save()
     return redirect("topics_detail", topic_id=topic_id)
 
-
+@login_required
 def post_detail(request, topic_id, post_id):
     topic = Topic.objects.get(id=topic_id)
     post = Post.objects.get(id=post_id)
