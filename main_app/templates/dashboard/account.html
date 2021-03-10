@@ -5,8 +5,26 @@
 
 <div class="card">
     <div class="card-content">
-        <h1>{{ user.account.first_name }}</h1>
-        <h3>{{ user.account.bio }}</h3>
+        <div>
+            <h1>{{ user.account.first_name }}</h1>
+            <h3>{{ user.account.bio }}</h3>
+        </div>
+        <div>
+            {% for photo in user.accountphoto_set.all %}
+            {% if photo.id == 1 %}
+            <img src="{{ photo.url }}" alt="{{ photo.url }}" class="responsive-img card-panel">
+            {% endif %}
+            {% empty %}
+            <div>No account photo</div>
+            {% endfor %}
+            <form action="{% url 'account_photo' user.id%}"
+                enctype="multipart/form-data"
+                method="POST">
+            {% csrf_token %}
+            <input type="file" name="photo_file">
+            <input type="submit" class="btn" value="Upload Photo">   
+            </form>
+        </div>
         <div class="card-action link-container">
             <a style="color: #f77f00;" href="{% url 'account_update' user.account.user_id %}">Edit</a>
             <a style="color: #f77f00;" href="{% url 'account_delete' user.account.user_id %}">Delete</a>

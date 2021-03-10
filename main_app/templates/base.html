@@ -25,7 +25,7 @@
                 <div class="bookmarks-list">
                     
                     {% for bookmark in user.account.bookmarks.all  %}
-                        <li>{{ bookmark.title }}</li>
+                        <a href="{% url 'topics_detail' bookmark.id %}"><li>{{ bookmark.title }}</li></a>
                     {% endfor %}
                     
                 </div>
@@ -33,7 +33,7 @@
                 <div class="dashboard-link-container">
                     <ul>
                         {% if user.is_authenticated %}
-                        <li><a href="{% url 'dashboard_index' %}">Dashboard</a></li>
+                        <li><a href="{% url 'dashboard_index' user.id %}">Dashboard</a></li>
                         <li><a href="{% url 'logout' %}">Log Out</a></li>
                         {% endif %}
                     </ul>
