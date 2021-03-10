@@ -42,6 +42,40 @@
                 <div class=" card-content">
                     <p>{{ comment.text }}</p>
                 </div>
+                <div>
+                    <div>
+                        {% with comment.likes.all as likes  %}
+                            {% if user.account in likes %}
+                            <form action="{% url 'unlike_comment' topic.id post.id comment.id user.id %}" method="POST">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn">unLike</button>
+                                </form>
+                            {% else %}                    
+                                <form action="{% url 'like_comment' topic.id post.id comment.id user.id %}" method="POST">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn">Like</button>
+                                </form>
+                            {% endif %}
+                        {% endwith %}
+                    </div>
+                    <span>{{ comment.likes.count }}</span>
+                    <div>
+                        {% with comment.dislikes.all as dislikes  %}
+                            {% if user.account in dislikes %}
+                            <form action="{% url 'undislike_comment' topic.id post.id comment.id user.id %}" method="POST">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn">unDislike</button>
+                                </form>
+                            {% else %}                    
+                                <form action="{% url 'dislike_comment' topic.id post.id comment.id user.id %}" method="POST">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn">Dislike</button>
+                                </form>
+                            {% endif %}
+                        {% endwith %}
+                    </div>
+                    <span>{{ comment.dislikes.count }}</span>
+                </div>
                 <div class="card-action link-container">
                     {% if  user.account.user_id == comment.user_id or user.account.user_id == topic.user_id %}  
                     <a style="color: #f77f00;" href="{% url 'comment_update' topic.id post.id comment.id %}">Edit</a>
