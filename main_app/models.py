@@ -77,10 +77,10 @@ def save_user_account(sender, instance, **kwargs):
 
 class AccountPhoto(models.Model):
     url = models.CharField(max_length=200)
-    account = models.ForeignKey(Account, on_delete=models.CASCADE, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
-        return f"Photo for {self.account}"
+        return f"Photo for {self.user_id} @{self.url}"
 
 class TopicPhoto(models.Model):
     url = models.CharField(max_length=200)
