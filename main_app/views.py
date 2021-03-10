@@ -151,6 +151,27 @@ class PostDelete(LoginRequiredMixin, DeleteView):
     model = Post
     success_url = "/topics/"
 
+# Post Vote Views
+
+
+def upvote_post(request, topic_id, post_id, user_id):
+    Post.objects.get(id=post_id).upvotes.add(user_id)
+    return redirect("topics_detail", topic_id=topic_id)
+
+
+def downvote_post(request, topic_id, post_id, user_id):
+    Post.objects.get(id=post_id).downvotes.add(user_id)
+    return redirect("topics_detail", topic_id=topic_id)
+
+
+def unupvote_post(request, topic_id, post_id, user_id):
+    Post.objects.get(id=post_id).upvotes.remove(user_id)
+    return redirect("topics_detail", topic_id=topic_id)
+
+
+def undownvote_post(request, topic_id, post_id, user_id):
+    Post.objects.get(id=post_id).downvotes.remove(user_id)
+    return redirect("topics_detail", topic_id=topic_id)
 
 # Comment Views
 
