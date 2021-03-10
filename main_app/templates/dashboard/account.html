@@ -9,10 +9,11 @@
             <h1>{{ user.account.first_name }}</h1>
             <h3>{{ user.account.bio }}</h3>
         </div>
-        
         <div>
-            {% for photo in user.account.photo_set.all %}
-            <img src="{{ photo.url }}" alt="{{ photo.url }}" class="responsive-img">
+            {% for photo in user.accountphoto_set.all %}
+            {% if photo.id == 1 %}
+            <img src="{{ photo.url }}" alt="{{ photo.url }}" class="responsive-img card-panel">
+            {% endif %}
             {% empty %}
             <div>No account photo</div>
             {% endfor %}
