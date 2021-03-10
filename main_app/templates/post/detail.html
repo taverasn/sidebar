@@ -15,6 +15,20 @@
 </div>
 <p>{{post.description}}</p>
 <div>
+  {% for photo in post.postphoto_set.all %}
+  {% if photo.id == 1 %}
+  <img src="{{ photo.url }}" alt="{{ photo.url }}" class="responsive-img card-panel">
+  {% endif %}
+  {% endfor %}
+  <form action="{% url 'post_photo' topic.id post.id %}"
+      enctype="multipart/form-data"
+      method="POST">
+  {% csrf_token %}
+  <input type="file" name="photo_file">
+  <input type="submit" class="btn" value="Upload Photo">   
+  </form>
+</div>
+<div>
     <div class="form-container">
         <form action="{% url 'add_comment' user.account.user_id topic.id post.id %}" method="POST">
             {% csrf_token %}
