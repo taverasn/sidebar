@@ -22,6 +22,7 @@
   {% endif %}
   {% endfor %}
   {% endwith %}
+  {% if  user.account.user_id == post.user_id or user.account.user_id == topic.user_id %}
   <form action="{% url 'post_photo' topic.id post.id %}"
       enctype="multipart/form-data"
       method="POST">
@@ -29,6 +30,7 @@
   <input type="file" name="photo_file">
   <input type="submit" class="btn" value="Upload Photo">   
   </form>
+  {% endif %}
 </div>
 <div>
     <div class="form-container">

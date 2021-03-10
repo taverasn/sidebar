@@ -22,6 +22,7 @@
   <div>No topic photo</div>
   {% endfor %}
   {% endwith %}
+  {% if  user.account.user_id == topic.user_id %} 
   <form action="{% url 'topic_photo' topic.id%}"
       enctype="multipart/form-data"
       method="POST">
@@ -29,6 +30,7 @@
   <input type="file" name="photo_file">
   <input type="submit" class="btn" value="Upload Photo">   
   </form>
+  {% endif %}
 </div>
 <div class="description-container">
   <p>{{ topic.description }}</p>
