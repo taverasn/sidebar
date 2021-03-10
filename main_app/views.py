@@ -10,7 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .forms import PostForm, CommentForm
-from .models import Account, Topic, Post, Comment, AccountPhoto
+from .models import Account, Topic, Post, Comment, AccountPhoto, TopicPhoto, PostPhoto
 from django.contrib.auth.models import User
 
 S3_BASE_URL = "https://s3.us-east-2.amazonaws.com/"
@@ -233,7 +233,7 @@ def topic_photo(request, topic_id):
 
             url = f"{S3_BASE_URL}{BUCKET}/{key}"
 
-            photo = Photo(url=url, topic_id=topic_id)
+            photo = TopicPhoto(url=url, topic_id=topic_id)
             photo.save()
         except:
             print("An error occured uploading file to S3 AWS")
@@ -256,7 +256,7 @@ def post_photo(request, topic_id, post_id):
 
             url = f"{S3_BASE_URL}{BUCKET}/{key}"
 
-            photo = Photo(url=url, post_id=post_id)
+            photo = PostPhoto(url=url, post_id=post_id)
             photo.save()
         except:
             print("An error occured uploading file to S3 AWS")
