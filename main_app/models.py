@@ -5,28 +5,12 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from datetime import datetime
 
-class Bookmark(models.Model):
-    
-    def __str__(self):
-        return f"{self.bookmark}"
-
-class Account(models.Model):
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
-    email = models.CharField(max_length=50)
-    bio = models.CharField(max_length=300)
-    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-    bookmark = models.ManyToManyField(Bookmark)
-
-    def __str__(self):
-        return f"{self.last_name} {self.last_name}"
 
 class Topic(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     created = models.DateTimeField(default=datetime.now, blank=True)
     title = models.CharField(max_length=50)
     description = models.TextField(max_length=500)
-    bookmark = models.ManyToManyField(Bookmark)
 
     def __str__(self):
         return f"{self.title}"
@@ -36,6 +20,18 @@ class Topic(models.Model):
 
     class Meta:
         ordering = ["-created"]
+
+class Account(models.Model):
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    email = models.CharField(max_length=50)
+    bio = models.CharField(max_length=300)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    bookmarks = models.ManyToManyField(Topic)
+
+    def __str__(self):
+        return f"{self.last_name} {self.last_name}"
+
 
 class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

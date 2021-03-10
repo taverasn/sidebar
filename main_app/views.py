@@ -1,5 +1,6 @@
 import uuid
 import boto3
+from django.utils.html import format_html
 from django.shortcuts import render, redirect, HttpResponseRedirect, get_object_or_404
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
@@ -9,7 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .forms import PostForm, CommentForm
-from .models import Account, Topic, Post, Comment  # ,Photo, Bookmark
+from .models import Account, Topic, Post, Comment, AccountPhoto
 from django.contrib.auth.models import User
 
 S3_BASE_URL = "https://s3.us-east-2.amazonaws.com/"
@@ -40,13 +41,15 @@ def home(request):
 
 
 @login_required
-def dashboard_index(request):
-    return render(request, "dashboard/index.html")
+def dashboard_index(request, user_id):
+    account = Account.objects.get(user_id=user_id)
+    return render(request, "dashboard/index.html", {"account": account})
 
 
 @login_required
-def account_dashboard(request):
-    return render(request, "dashboard/account.html")
+def account_dashboard(request, user_id):
+    account = Account.objects.get(user_id=user_id)
+    return render(request, "dashboard/account.html", {"account": account})
 
 
 class AccountCreate(LoginRequiredMixin, CreateView):
@@ -92,6 +95,7 @@ def topics_detail(request, topic_id):
         },
     )
 
+
 class TopicList(LoginRequiredMixin, ListView):
     model = Topic
 
@@ -99,6 +103,7 @@ class TopicList(LoginRequiredMixin, ListView):
 class TopicCreate(LoginRequiredMixin, CreateView):
     model = Topic
     fields = ["title", "description"]
+
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
@@ -132,7 +137,12 @@ def post_detail(request, topic_id, post_id):
     topic = Topic.objects.get(id=topic_id)
     post = Post.objects.get(id=post_id)
     comment_form = CommentForm()
-    return render(request, "post/detail.html", {"post": post, "topic": topic, "comment_form": comment_form})
+    return render(
+        request,
+        "post/detail.html",
+        {"post": post, "topic": topic, "comment_form": comment_form},
+    )
+
 
 class PostUpdate(LoginRequiredMixin, UpdateView):
     model = Post
@@ -142,7 +152,6 @@ class PostUpdate(LoginRequiredMixin, UpdateView):
 class PostDelete(LoginRequiredMixin, DeleteView):
     model = Post
     success_url = "/topics/"
-
 
 
 # Comment Views
@@ -161,7 +170,7 @@ def add_comment(request, user_id, topic_id, post_id):
 
 class CommentUpdate(LoginRequiredMixin, UpdateView):
     model = Comment
-    fields = ['text']
+    fields = ["text"]
 
 
 class CommentDelete(LoginRequiredMixin, DeleteView):
@@ -171,80 +180,86 @@ class CommentDelete(LoginRequiredMixin, DeleteView):
 
 # Bookmark Views
 
-# @login_required
-# def bookmark_topic(request, topic_id, user_id, bookmark_id):
-#     Topic.objects.get(id=topic_id).bookmarks.add(bookmark_id)
-#     User.objects.get(id=user_id).bookmarks.add(bookmark_id)
-#     return redirect('topic_detail', topic_id=topic_id)
 
-# @login_required
-# def unbookmark_topic(request, topic_id, user_id, bookmark_id):
-#     Topic.objects.get(id=topic_id).bookmarks.delete(bookmark_id)
-#     User.objects.get(id=user_id).bookmarks.delete(bookmark_id)
-#     return redirect('topic_detail', topic_id=topic_id)
+@login_required
+def bookmark_topic(request, topic_id, user_id):
+    Account.objects.get(user_id=user_id).bookmarks.add(topic_id)
+    return redirect("topics_detail", topic_id=topic_id)
+
+
+@login_required
+def unbookmark_topic(request, topic_id, user_id):
+    Account.objects.get(user_id=user_id).bookmarks.remove(topic_id)
+    return redirect("topics_detail", topic_id=topic_id)
 
 
 # Photo Views
 
-# @login_required
-# def account_photo(request, user_id):
-#     photo_file = request.FILES.get('photo_file', None)
 
-#     if photo_file:
-#         s3 = boto3.client('s3')
+@login_required
+def account_photo(request, user_id):
+    photo_file = request.FILES.get("photo_file", None)
 
-#         index_of_last_period = photo_file.name.rfind('.')
+    if photo_file:
+        s3 = boto3.client("s3")
 
-#         key = uuid.uuid4().hex[:6] + photo_file.name[index_of_last_period]
+        index_of_last_period = photo_file.name.rfind(".")
 
-#         try:
-#             s3.upload_fileobj(photo_file, BUCKET, key)
+        key = uuid.uuid4().hex[:6] + photo_file.name[index_of_last_period]
 
-#             url = f"{S3_BASE_URL}{BUCKET}/{key}"
+        try:
+            s3.upload_fileobj(photo_file, BUCKET, key)
 
-#             photo = Photo(url=url, user_id=user_id)
-#             photo.save()
-#         except: print('An error occured uploading file to S3 AWS')
-#     return redirect('account_dashboard', user_id=user_id)
+            url = f"{S3_BASE_URL}{BUCKET}/{key}"
 
-# @login_required
-# def topic_photo(request, topic_id):
-#     photo_file = request.FILES.get('photo_file', None)
+            photo = AccountPhoto(url=url, user_id=user_id)
+            photo.save()
+        except:
+            print("An error occured uploading file to S3 AWS")
+    return redirect("account_dashboard", user_id=user_id)
 
-#     if photo_file:
-#         s3 = boto3.client('s3')
 
-#         index_of_last_period = photo_file.name.rfind('.')
+@login_required
+def topic_photo(request, topic_id):
+    photo_file = request.FILES.get("photo_file", None)
 
-#         key = uuid.uuid4().hex[:6] + photo_file.name[index_of_last_period]
+    if photo_file:
+        s3 = boto3.client("s3")
 
-#         try:
-#             s3.upload_fileobj(photo_file, BUCKET, key)
+        index_of_last_period = photo_file.name.rfind(".")
 
-#             url = f"{S3_BASE_URL}{BUCKET}/{key}"
+        key = uuid.uuid4().hex[:6] + photo_file.name[index_of_last_period]
 
-#             photo = Photo(url=url, topic_id=topic_id)
-#             photo.save()
-#         except: print('An error occured uploading file to S3 AWS')
-#     return redirect('topics_detail', topic_id=topic_id)
+        try:
+            s3.upload_fileobj(photo_file, BUCKET, key)
 
-# @login_required
-# def post_photo(request, topic_id, post_id):
-#     photo_file = request.FILES.get('photo_file', None)
+            url = f"{S3_BASE_URL}{BUCKET}/{key}"
 
-#     if photo_file:
-#         s3 = boto3.client('s3')
+            photo = Photo(url=url, topic_id=topic_id)
+            photo.save()
+        except:
+            print("An error occured uploading file to S3 AWS")
+    return redirect("topics_detail", topic_id=topic_id)
 
-#         index_of_last_period = photo_file.name.rfind('.')
 
-#         key = uuid.uuid4().hex[:6] + photo_file.name[index_of_last_period]
+@login_required
+def post_photo(request, topic_id, post_id):
+    photo_file = request.FILES.get("photo_file", None)
 
-#         try:
-#             s3.upload_fileobj(photo_file, BUCKET, key)
+    if photo_file:
+        s3 = boto3.client("s3")
 
-#             url = f"{S3_BASE_URL}{BUCKET}/{key}"
+        index_of_last_period = photo_file.name.rfind(".")
 
-#             photo = Photo(url=url, topic_id=topic_id, post_id=post_id)
-#             photo.save()
-#         except: print('An error occured uploading file to S3 AWS')
-#     return redirect('post_detail', topic_id=topic_id, post_id=post_id)
+        key = uuid.uuid4().hex[:6] + photo_file.name[index_of_last_period]
+
+        try:
+            s3.upload_fileobj(photo_file, BUCKET, key)
+
+            url = f"{S3_BASE_URL}{BUCKET}/{key}"
+
+            photo = Photo(url=url, topic_id=topic_id, post_id=post_id)
+            photo.save()
+        except:
+            print("An error occured uploading file to S3 AWS")
+    return redirect("post_detail", topic_id=topic_id, post_id=post_id)

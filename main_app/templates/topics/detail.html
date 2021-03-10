@@ -37,14 +37,22 @@
   </div>
 </div>
 <div class="">
-  <!-- <h3>Bookmark:</h3>
-      <h3>Tags</h3>
-      <div>
-          {% for tag in tags %}
-                  <p>{{ tag.title }}</p>
-              
-          {% endfor %}
-      </div> -->
+  {% with user.account.bookmarks.all as bookmarked_topics %}
+      {% if topic in bookmarked_topics %}
+      <form action="{% url 'unbookmark_topic' topic.id user.id %}" method="POST">
+        {% csrf_token %}
+        <button type="submit" class="btn">unBookmark</button>
+      </form>
+      {% else %}
+      <form action="{% url 'bookmark_topic' topic.id user.id %}" method="POST">
+        {% csrf_token %}
+        <button type="submit" class="btn">Bookmark</button>
+      </form>
+      {% endif %}
+  {% endwith %}
+</div>
+<div>
+
 </div>
 
 {% endblock %}
