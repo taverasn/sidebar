@@ -55,6 +55,8 @@ class Comment(models.Model):
     created = models.DateTimeField(default=datetime.now, blank=True)
     text = models.TextField(max_length=250)
     post = models.ForeignKey(Post, on_delete=models.CASCADE, null=True)
+    likes = models.ManyToManyField(Account, related_name="likes")
+    dislikes = models.ManyToManyField(Account, related_name="dislikes")
 
 
     def get_absolute_url(self):
