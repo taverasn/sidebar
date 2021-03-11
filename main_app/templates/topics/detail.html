@@ -4,38 +4,67 @@
 
 <div class="headline">
   <a class="btn" href="{% url 'topics_index' %}">Back to Topics</a>
-  <h1>{{ topic.title }}</h1>
-  <div class="headline-links">
-  {% if  user.account.user_id == topic.user_id %}  
-    <a class="btn" href="{% url 'topic_update' topic.id %}">Edit</a>
-    <a class="btn" href="{% url 'topic_delete' topic.id %}">Delete</a>
-  {% endif %}
+  <div class="bookmarks-container">
+    {% with user.account.bookmarks.all as bookmarked_topics %}
+      {% if topic in bookmarked_topics %}
+        <form action="{% url 'unbookmark_topic' topic.id user.id %}" method="POST">
+          {% csrf_token %}
+          <button type="submit" class="btn">unBookmark</button>
+        </form>
+      {% else %}
+        <form action="{% url 'bookmark_topic' topic.id user.id %}" method="POST">
+          {% csrf_token %}
+          <button type="submit" class="btn">Bookmark</button>
+        </form>
+      {% endif %}
+    {% endwith %}
   </div>
 </div>
+<h1>{{ topic.title }}</h1>
 <div>
   {% with topic.topicphoto_set.all as photos %}
-  {% for photo in photos %}
-  {% if photo == photos.first %}
-  <img src="{{ photo.url }}" alt="{{ photo.url }}" class="responsive-img card-panel">
-  {% endif %}
-  {% empty %}
-  <div>No topic photo</div>
-  {% endfor %}
+    {% for photo in photos %}
+      {% if photo == photos.first %}
+        <img src="{{ photo.url }}" alt="{{ photo.url }}" class="responsive-img card-panel">
+      {% endif %}
+    {% empty %}
+      <div>No topic photo</div>
+    {% endfor %}
   {% endwith %}
   {% if  user.account.user_id == topic.user_id %} 
-  <form action="{% url 'topic_photo' topic.id%}"
-      enctype="multipart/form-data"
-      method="POST">
-  {% csrf_token %}
-  <input type="file" name="photo_file">
-  <input type="submit" class="btn" value="Upload Photo">   
-  </form>
+    <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Add Photo</a>
+    <div id="modal1" class="modal">
+      <div class="modal-content">
+        <form action="{% url 'topic_photo' topic.id%}"
+          enctype="multipart/form-data"
+          method="POST">
+            {% csrf_token %}
+            <input type="file" name="photo_file">
+            <input type="submit" class="btn modal-close" value="Upload Photo">   
+        </form>
+      </div>
+    </div>
   {% endif %}
 </div>
 <div class="description-container">
   <p>{{ topic.description }}</p>
+  {% if  user.account.user_id == topic.user_id %}  
+    <a class="btn" href="{% url 'topic_update' topic.id %}">Edit</a>
+    <a class="btn" href="{% url 'topic_delete' topic.id %}">Delete</a>
+    <form action="{% url 'add_tag' topic.id %}" method="POST">
+      {% csrf_token %}
+      {{ tag_form.as_p }}
+      <input type="submit" class="btn" value="Add Tag">
+    </form>
+  {% endif %}
 </div>
-
+<ul>
+  {% for tag in topic.tag_set.all  %}
+    <li>{{ tag.text }}</li>
+  {% endfor %}
+</ul>
+<div>
+</div>
 <div>
   <div class="form-container">
     <form action="{% url 'add_post' user.account.user_id topic.id %}" method="POST">
@@ -55,34 +84,34 @@
             </div>
             <div>
             {% with post.upvotes.all as upvotes  %}
-                {% if user.account in upvotes %}
+              {% if user.account in upvotes %}
                 <form action="{% url 'unupvote_post' topic.id post.id user.id %}" method="POST">
-                        {% csrf_token %}
-                        <button type="submit" class="btn">UnUpvote</button>
-                    </form>
-                {% else %}                    
-                    <form action="{% url 'upvote_post' topic.id post.id user.id %}" method="POST">
-                        {% csrf_token %}
-                        <button type="submit" class="btn">Upvote</button>
-                    </form>
-                {% endif %}
+                  {% csrf_token %}
+                  <button type="submit" class="btn">UnUpvote</button>
+                </form>
+              {% else %}                    
+                <form action="{% url 'upvote_post' topic.id post.id user.id %}" method="POST">
+                  {% csrf_token %}
+                  <button type="submit" class="btn">Upvote</button>
+                </form>
+              {% endif %}
             {% endwith %}
             </div>
             <span>{{ post.upvotes.count }}</span>
             <div>
-                {% with post.downvotes.all as downvotes  %}
-                    {% if user.account in downvotes %}
-                    <form action="{% url 'undownvote_post' topic.id post.id user.id %}" method="POST">
-                            {% csrf_token %}
-                            <button type="submit" class="btn">UnDownvote</button>
-                        </form>
-                    {% else %}                    
-                        <form action="{% url 'downvote_post' topic.id post.id user.id %}" method="POST">
-                            {% csrf_token %}
-                            <button type="submit" class="btn">Downvote</button>
-                        </form>
-                    {% endif %}
-                {% endwith %}
+              {% with post.downvotes.all as downvotes  %}
+                {% if user.account in downvotes %}
+                  <form action="{% url 'undownvote_post' topic.id post.id user.id %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="btn">UnDownvote</button>
+                  </form>
+                {% else %}                    
+                  <form action="{% url 'downvote_post' topic.id post.id user.id %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="btn">Downvote</button>
+                  </form>
+                {% endif %}
+              {% endwith %}
             </div>
             <span>{{ post.downvotes.count }}</span>
             </div>
@@ -90,21 +119,6 @@
       </a>
     {% endfor %}
   </div>
-</div>
-<div class="">
-  {% with user.account.bookmarks.all as bookmarked_topics %}
-      {% if topic in bookmarked_topics %}
-      <form action="{% url 'unbookmark_topic' topic.id user.id %}" method="POST">
-        {% csrf_token %}
-        <button type="submit" class="btn">unBookmark</button>
-      </form>
-      {% else %}
-      <form action="{% url 'bookmark_topic' topic.id user.id %}" method="POST">
-        {% csrf_token %}
-        <button type="submit" class="btn">Bookmark</button>
-      </form>
-      {% endif %}
-  {% endwith %}
 </div>
 <div>
 
