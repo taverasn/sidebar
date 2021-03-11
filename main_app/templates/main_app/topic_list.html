@@ -2,51 +2,56 @@
 {% block content %}
 
 <div class="topic-index-main">
-    <div class="list">
-        <div class="headline">
-            <h1>Topic Index</h1>
-            <a class="btn" href="{% url 'topic_create' %} "><span>Create</span></a>
+    <div class="list-container">
+        <div class="headline" id="index-headline">
+            <div class="search-bar">
+                <input type="search" name="search" id="search-bar" placeholder="search">
+                <button type="submit" class="btn"><i class="fas fa-search"></i></button>
+            </div>
+            <a class="btn" href="{% url 'topic_create' %} "><i class="far fa-plus-square fa-2x"></i></a>
         </div>
-        {% for topic in topic_list %}
-            <a class="card-link" href="{% url 'topics_detail' topic.id %}">
-                <div class="card topic">
-                    <div class=" card-content">
-                        <div class="title-headline">
-                            <div class="title-container">
-                                <span class="prefix">&nbsp; / {{ topic.user_id }} / &nbsp; &nbsp;</span>
-                                <span class="title">{{ topic.title }}</span>
-                                <span class="title-divider">▶︎</span>
-                                <span class="created-by">Posted By: {{ topic.user }} @ {{topic.created }}</span>
+        <div class="list">
+            {% for topic in topic_list %}
+                <a class="card-link" href="{% url 'topics_detail' topic.id %}">
+                    <div class="card topic">
+                        <div class=" card-content">
+                            <div class="title-headline">
+                                <div class="title-container">
+                                    <span class="prefix">&nbsp; / {{ topic.user_id }} / &nbsp; &nbsp;</span>
+                                    <span class="title">{{ topic.title }}</span>
+                                    <span class="title-divider">▶︎</span>
+                                    <span class="created-by">Posted By: {{ topic.user }} @ {{topic.created }}</span>
+                                </div>
+                                <div class="card-rule"></div>
                             </div>
-                            <div class="card-rule"></div>
-                        </div>
-                        <p class="description">{{ topic.description }}</p>
-                        <div class="info-line">
-                            <span class="count-line"><i class="far fa-clone"></i> : <span>{{ topic.post_set.count }}</span></span>
+                            <p class="description">{{ topic.description }}</p>
+                            <div class="info-line">
+                                <span class="count-line"><i class="far fa-clone"></i> : <span>{{ topic.post_set.count }}</span></span>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </a>
-        {% endfor %}
-    </div>
-        <div class="side-list">
-            <div class="headline">
-                <h1>extra stuff</h1>
-            </div>
-            <div class="new-posts"> 
-                {% for topic in topic_list %}
-                        {% with topic.post_set.all as posts %}
-                            {% for post in posts %}
-                                {% if post == posts.last %}
-                                    <a href="{% url 'post_detail' topic.id post.id %}">
-                                        <span>{{ post.title }}</span>
-                                    </a>
-                                {% endif %}
-                            {% endfor %}
-                        {% endwith %}
-                {% endfor %}
-            </div>
+                </a>
+            {% endfor %}
         </div>
+    </div>
+    <div class="side-list">
+        <div class="headline">
+            <span>extra stuff</span>
+        </div>
+        <div class="new-posts"> 
+            {% for topic in topic_list %}
+                    {% with topic.post_set.all as posts %}
+                        {% for post in posts %}
+                            {% if post == posts.last %}
+                                <a href="{% url 'post_detail' topic.id post.id %}">
+                                    <span>{{ post.title }}</span>
+                                </a>
+                            {% endif %}
+                        {% endfor %}
+                    {% endwith %}
+            {% endfor %}
+        </div>
+    </div>
 </div>
 
 {% endblock %}
