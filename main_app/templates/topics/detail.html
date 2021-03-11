@@ -65,18 +65,6 @@
 </ul>
 <div>
 </div>
-<ul>
-  {% for tag in topic.tag_set.all  %}
-  <li>{{ tag.text }}</li>
-  {% endfor %}
-</ul>
-<div>
-  <form action="{% url 'add_tag' topic.id %}" method="POST">
-    {% csrf_token %}
-    {{ tag_form.as_p }}
-    <input type="submit" class="btn" value="Add Tag">
-  </form>
-</div>
 <div>
   <div class="form-container">
     <form action="{% url 'add_post' user.account.user_id topic.id %}" method="POST">
