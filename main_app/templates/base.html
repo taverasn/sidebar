@@ -26,7 +26,7 @@
                 <div class="rule"></div>
                 <div class="bookmarks-list">
                     {% for bookmark in user.account.bookmarks.all  %}
-                        <a href="{% url 'topics_detail' bookmark.id %}"><li>{{ bookmark.title }}</li></a>
+                        <a href="{% url 'topics_detail' bookmark.id %}"><li><i class="fas fa-bookmark"></i>{{ bookmark.title }}</li></a>
                     {% endfor %}
                 </div>
                 <div class="rule"></div>
