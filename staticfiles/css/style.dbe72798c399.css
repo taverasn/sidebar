@@ -394,13 +394,3 @@ opacity: 0.9;
     align-items: flex-start;
     width: 90%;
 }
-
-.list {
-    display: flex;
-    flex-direction: column;
-}
-
-.side-list {
-    display: flex;
-    flex-direction: column;
-}
