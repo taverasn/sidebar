@@ -11,6 +11,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
     <script defer src="{% static 'js/script.js' %}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://kit.fontawesome.com/7c7f4aabd8.js" crossorigin="anonymous"></script>
     <title>SideBar</title>
 </head>
 <body class="base-body"> 
@@ -24,11 +25,9 @@
                 </div>
                 <div class="rule"></div>
                 <div class="bookmarks-list">
-                    
                     {% for bookmark in user.account.bookmarks.all  %}
                         <a href="{% url 'topics_detail' bookmark.id %}"><li>{{ bookmark.title }}</li></a>
                     {% endfor %}
-                    
                 </div>
                 <div class="rule"></div>
                 <div class="dashboard-link-container">
@@ -39,15 +38,15 @@
                         {% endif %}
                     </ul>
                 </div>
+                <footer class="base-footer">
+                    <div>&copy; <span id="year"></span> SideBar</div> 
+                </footer>
             </div>
         </nav>
     </header>
     <main class="base-main">
         {% block content %}
         {% endblock %}
-        <footer class="base-footer">
-            <div>All Rights Reserved, &copy; <span id="year"></span> Project Django</div> 
-        </footer>
     </main>
     <script>
         const spanEl = document.getElementById('year');
