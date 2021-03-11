@@ -394,24 +394,3 @@ opacity: 0.9;
     align-items: flex-start;
     width: 90%;
 }
-
-.list {
-    display: flex;
-    flex-direction: column;
-}
-
-.side-list {
-    display: flex;
-    flex-direction: column;
-    width: fit-content;
-    height: 100%;
-}
-
-.new-posts {
-    display: flex;
-    flex-direction: column;
-    padding-left: 10px;
-    padding-right: 10px;
-    border: 2px solid var(--test-color-1);
-    background-color: white;
-}
