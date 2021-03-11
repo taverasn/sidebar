@@ -9,8 +9,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from .forms import PostForm, CommentForm
-from .models import Account, Topic, Post, Comment, AccountPhoto, TopicPhoto, PostPhoto
+from .forms import PostForm, CommentForm, TagForm
+from .models import Account, Topic, Post, Tag, Comment, AccountPhoto, TopicPhoto, PostPhoto
 from django.contrib.auth.models import User
 
 S3_BASE_URL = "https://s3.us-east-2.amazonaws.com/"
@@ -84,12 +84,14 @@ class AccountDelete(LoginRequiredMixin, DeleteView):
 def topics_detail(request, topic_id):
     topic = Topic.objects.get(id=topic_id)
     post_form = PostForm()
+    tag_form = TagForm()
     return render(
         request,
         "topics/detail.html",
         {
             "topic": topic,
             "post_form": post_form,
+            "tag_form": tag_form,
         },
     )
 
@@ -116,6 +118,16 @@ class TopicDelete(LoginRequiredMixin, DeleteView):
     model = Topic
     success_url = "/topics/"
 
+# Tag Views
+
+@login_required
+def add_tag(request, topic_id):
+    form = TagForm(request.POST)
+    if form.is_valid():
+        new_tag = form.save(commit=False)
+        new_tag.topic_id = topic_id
+        new_tag.save()
+    return redirect("topics_detail", topic_id=topic_id)
 
 # Post Views
 

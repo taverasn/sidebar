@@ -5,12 +5,12 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from datetime import datetime
 
-
 class Topic(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     created = models.DateTimeField(default=datetime.now, blank=True)
     title = models.CharField(max_length=50)
     description = models.TextField(max_length=500)
+    
 
     def __str__(self):
         return f"{self.title}"
@@ -20,6 +20,13 @@ class Topic(models.Model):
 
     class Meta:
         ordering = ["-created"]
+
+class Tag(models.Model):
+    text = models.CharField(max_length=30)
+    topic = models.ForeignKey(Topic, on_delete=models.CASCADE, null=True)
+    
+    def __str__(self):
+        return f"{self.text}"
 
 class Account(models.Model):
     first_name = models.CharField(max_length=50)
