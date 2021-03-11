@@ -468,12 +468,3 @@ opacity: 0.9;
     background-color: white;
     border-radius: 3px;
 }
-
-/* -------------------------------------------- TOPIC DETAIL -------------------------------------------- */
-
-.page-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 90%;
-}
