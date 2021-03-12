@@ -4,107 +4,108 @@
 {% block content %}
 <div class="topic-index-main">
   <div class="list-container">
-    <div class="headline">
-      <a class="btn" href="{% url 'topics_index' %}">Back to Topics</a>
-      <span>{{ topic.title }}</span>
-      <div class="bookmarks-container">
-        {% with user.account.bookmarks.all as bookmarked_topics %}
-          {% if topic in bookmarked_topics %}
-            <form action="{% url 'unbookmark_topic' topic.id user.id %}" method="POST">
-              {% csrf_token %}
-              <button type="submit" class="btn">unBookmark</button>
-            </form>
-          {% else %}
-            <form action="{% url 'bookmark_topic' topic.id user.id %}" method="POST">
-              {% csrf_token %}
-              <button type="submit" class="btn">Bookmark</button>
-            </form>
-          {% endif %}
-        {% endwith %}
-      </div>
-    </div>
-    <div class="description-container">
-      <p>{{ topic.description }}</p>
-      <div class="user-options">
-        {% if  user.account.user_id == topic.user_id %}  
-          <a class="btn" href="{% url 'topic_update' topic.id %}">Edit</a>
-          <a class="btn" href="{% url 'topic_delete' topic.id %}">Delete</a>
-          {% with topic.topicphoto_set.all as photos %}
-            {% for photo in photos %}
-              {% if photo == photos.first %}
-                <img src="{{ photo.url }}" alt="{{ photo.url }}" class="responsive-img card-panel">
-              {% endif %}
-            {% empty %}
-              <div>No topic photo</div>
-            {% endfor %}
+    <div class="detail-headline">
+      <div class="detail-headline-link-container">
+        <a class="btn" href="{% url 'topics_index' %}"><i class="fas fa-angle-double-left"></i></a>
+        <span>{{ topic.title }}</span>
+        <div class="bookmarks-container">
+          {% with user.account.bookmarks.all as bookmarked_topics %}
+            {% if topic in bookmarked_topics %}
+              <form action="{% url 'unbookmark_topic' topic.id user.id %}" method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn"><i class="fas fa-bookmark"></i></button>
+              </form>
+            {% else %}
+              <form action="{% url 'bookmark_topic' topic.id user.id %}" method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn"><i class="far fa-bookmark"></i></button>
+              </form>
+            {% endif %}
           {% endwith %}
-          {% if  user.account.user_id == topic.user_id %} 
-            <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Add Photo</a>
-            <div id="modal1" class="modal">
-              <div class="modal-content">
-                <form action="{% url 'topic_photo' topic.id%}"
-                  enctype="multipart/form-data"
-                  method="POST">
-                    {% csrf_token %}
-                    <input type="file" name="photo_file">
-                    <input type="submit" class="btn modal-close" value="Upload Photo">   
-                </form>
-              </div>
-            </div>
-          {% endif %}
-          <form action="{% url 'add_tag' topic.id %}" method="POST">
-            {% csrf_token %}
-            {{ tag_form.as_p }}
-            <input type="submit" class="btn" value="Add Tag">
-          </form>
-        {% endif %}
+        </div>
       </div>
+      <div class="description-container">
+        <div class="detail-description">
+          <p>{{ topic.description }}</p>
+        </div>
+        <div class="user-options">
+          {% if  user.account.user_id == topic.user_id %}  
+            <a class="btn" href="{% url 'topic_update' topic.id %}"><i class="far fa-edit"></i></a>
+            <a class="btn" href="{% url 'topic_delete' topic.id %}"><i class="far fa-trash-alt"></i></a>
+            {% with topic.topicphoto_set.all as photos %}
+              {% for photo in photos %}
+                {% if photo == photos.first %}
+                  <img src="{{ photo.url }}" alt="{{ photo.url }}" class="responsive-img card-panel">
+                {% endif %}
+              {% empty %}
+                <div></div>
+              {% endfor %}
+            {% endwith %}
+            {% if  user.account.user_id == topic.user_id %} 
+              <a class="waves-effect waves-light btn modal-trigger" href="#modal1"><i class="fas fa-upload"></i></a>
+              <div id="modal1" class="modal">
+                <div class="modal-content">
+                  <form action="{% url 'topic_photo' topic.id%}"
+                    enctype="multipart/form-data"
+                    method="POST">
+                      {% csrf_token %}
+                      <input type="file" name="photo_file">
+                      <input type="submit" class="btn modal-close" value="Upload Photo">   
+                  </form>
+                </div>
+              </div>
+            {% endif %}
+            
+          {% endif %}
+        </div>
+      </div>
+      <div class="headline-rule"></div>
     </div>
     <div class="list">
       {% for post in topic.post_set.all %}
         <a class="card-link" href="{% url 'post_detail' topic.id post.id %}">
           <div class="card topic">
             <div class=" card-content">
-              <div class="title-headline">
-                <div class="title-container">
-                  <span class="prefix">&nbsp; / {{ post.user_id }} / &nbsp; &nbsp;</span>
-                  <span class="title">{{ post.title }}</span>
-                  <span class="title-divider">▶︎</span>
-                  <span class="created-by">Posted By: {{ post.user }} @ {{post.created }}</span>
+              <div class="content-wrapper">
+                <div class="title-headline">
+                  <div class="title-container">
+                    <span class="prefix">&nbsp; / {{ post.user_id }} / &nbsp; &nbsp;</span>
+                    <span class="title">{{ post.title }}</span>
+                    <span class="title-divider">▶︎</span>
+                    <span class="created-by">Posted By: {{ post.user }} @ {{post.created }}</span>
+                  </div>
+                  <div class="card-rule"></div>
                 </div>
-                <div class="card-rule"></div>
+                <p class="description">{{ post.description }}</p>
+                <div class="info-line">
+                  <p><i class="far fa-comments"></i> : {{ post.comment_set.count }}</p>
+                </div>
               </div>
-              <p>{{ post.description }}</p>
-              <div class="info-line">
-                <p>{{ post.comment_set.count }}</p>
-              </div>
-              <div>
-              {% with post.upvotes.all as upvotes  %}
-                {% if user.account in upvotes %}
-                  <form action="{% url 'unupvote_post' topic.id post.id user.id %}" method="POST">
-                    {% csrf_token %}
-                    <button type="submit" class="btn">UnUpvote</button>
-                  </form>
-                {% else %}                    
-                  <form action="{% url 'upvote_post' topic.id post.id user.id %}" method="POST">
-                    {% csrf_token %}
-                    <button type="submit" class="btn">Upvote</button>
-                  </form>
-                {% endif %}
-              {% endwith %}
-              </div>
-              <span>{{ post.upvotes.count|sub:post.downvotes.count }}</span>
-              <div>
+              <div class="votes">
+                {% with post.upvotes.all as upvotes  %}
+                  {% if user.account in upvotes %}
+                    <form action="{% url 'unupvote_post' topic.id post.id user.id %}" method="POST">
+                      {% csrf_token %}
+                      <button type="submit" class="btn"><i class="fas fa-caret-square-up"></i></button>
+                    </form>
+                  {% else %}                    
+                    <form action="{% url 'upvote_post' topic.id post.id user.id %}" method="POST">
+                      {% csrf_token %}
+                      <button type="submit" class="btn"><i class="far fa-caret-square-up"></i></button>
+                    </form>
+                  {% endif %}
+                {% endwith %}
+                <span>{{ post.upvotes.count|sub:post.downvotes.count }}</span>
                 {% with post.downvotes.all as downvotes  %}
                   {% if user.account in downvotes %}
                     <form action="{% url 'undownvote_post' topic.id post.id user.id %}" method="POST">
                       {% csrf_token %}
-                      <button type="submit" class="btn">UnDownvote</button>
+                      <button type="submit" class="btn"><i class="fas fa-caret-square-down"></i></button>
                     </form>
                   {% else %}                    
                     <form action="{% url 'downvote_post' topic.id post.id user.id %}" method="POST">
                       {% csrf_token %}
-                      <button type="submit" class="btn">Downvote</button>
+                      <button type="submit" class="btn"><i class="far fa-caret-square-down"></i></button>
                     </form>
                   {% endif %}
                 {% endwith %}
@@ -116,12 +117,24 @@
     </div>
   </div>
   <div class="side-list">
-    <ul>
-      {% for tag in topic.tag_set.all  %}
-        <li>{{ tag.text }}</li>
-      {% endfor %}
-    </ul>
-    <div class="form-container">
+    <div class="tag-container">
+      <span class="tag-title"><i class="fas fa-tags"></i> Tags:</span>
+      <div class="tag-list">
+        <ul>
+          {% for tag in topic.tag_set.all  %}
+            <li><i class="fas fa-hashtag"></i>{{ tag.text }}</li>
+          {% endfor %}
+        </ul>
+        <form action="{% url 'add_tag' topic.id %}" method="POST">
+          {% csrf_token %}
+          <div class="tag-form-inline">
+            {{ tag_form.as_p }}
+            <button type="submit" class="btn"><i class="fas fa-plus" id="plus-icon"></i><i class="fas fa-tags" id="tag-icon"></i></button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="form-container post-form-container">
       <form action="{% url 'add_post' user.account.user_id topic.id %}" method="POST">
         {% csrf_token %}
         {{ post_form.as_p }}
