@@ -76,65 +76,63 @@
             <div class="headline-rule"></div>
         </div>
         <div class="list">
-                {% for comment in post.comment_set.all %}
-                    <div class="card topic">
-                        <div class="card-content">
-                            <div class="content-wrapper">
-                                <div class="title-headline">
-                                    <div class="comment-title-container">
-                                        <span class="created-by">Posted By: {{ comment.user }} @ {{ comment.created }}</span>
-                                        <div class="comment-options">
-                                            {% if  user.account.user_id == comment.user_id or user.account.user_id == topic.user_id %}  
-                                            <a href="{% url 'comment_update' topic.id post.id comment.id %}"><i class="far fa-edit"></i></a>
-                                            <a href="{% url 'comment_delete' topic.id post.id comment.id %}"><i class="far fa-trash-alt"></i></a>
-                                            {% endif %}
-                                        </div>
+            {% for comment in post.comment_set.all %}
+                <div class="card topic">
+                    <div class="card-content">
+                        <div class="content-wrapper">
+                            <div class="title-headline">
+                                <div class="comment-title-container">
+                                    <span class="created-by">Posted By: {{ comment.user }} @ {{ comment.created }}</span>
+                                    <div class="comment-options">
+                                        {% if  user.account.user_id == comment.user_id or user.account.user_id == topic.user_id %}  
+                                        <a href="{% url 'comment_update' topic.id post.id comment.id %}"><i class="far fa-edit"></i></a>
+                                        <a href="{% url 'comment_delete' topic.id post.id comment.id %}"><i class="far fa-trash-alt"></i></a>
+                                        {% endif %}
                                     </div>
                                 </div>
-                                <p>{{ comment.text }}</p>
-                                <div class="info-line">
-                                    <span>{{ comment.likes.count }}</span>
-                                    <div>
-                                        {% with comment.likes.all as likes  %}
-                                            {% if user.account in likes %}
-                                                <form action="{% url 'unlike_comment' topic.id post.id comment.id user.id %}" method="POST">
-                                                    {% csrf_token %}
-                                                    <button type="submit" class="like-btn"><i class="fas fa-thumbs-up"></i></button>
-                                                </form>
-                                            {% else %}                    
-                                                <form action="{% url 'like_comment' topic.id post.id comment.id user.id %}" method="POST">
-                                                    {% csrf_token %}
-                                                    <button type="submit" class="like-btn"><i class="far fa-thumbs-up"></i></button>
-                                                </form>
-                                            {% endif %}
-                                        {% endwith %}
-                                    </div>
-                                    <span>-{{ comment.dislikes.count }}</span>
-                                    <div>
-                                        {% with comment.dislikes.all as dislikes  %}
-                                            {% if user.account in dislikes %}
-                                            <form action="{% url 'undislike_comment' topic.id post.id comment.id user.id %}" method="POST">
-                                                    {% csrf_token %}
-                                                    <button type="submit" class="like-btn"><i class="fas fa-thumbs-down"></i></button>
-                                                </form>
-                                            {% else %}                    
-                                                <form action="{% url 'dislike_comment' topic.id post.id comment.id user.id %}" method="POST">
-                                                    {% csrf_token %}
-                                                    <button type="submit" class="like-btn"><i class="far fa-thumbs-down"></i></button>
-                                                </form>
-                                            {% endif %}
-                                        {% endwith %}
-                                    </div>
-                                </div>
-                             
                             </div>
+                            <p>{{ comment.text }}</p>
+                            <div class="info-line">
+                                <span>{{ comment.likes.count }}</span>
+                                <div>
+                                    {% with comment.likes.all as likes  %}
+                                        {% if user.account in likes %}
+                                            <form action="{% url 'unlike_comment' topic.id post.id comment.id user.id %}" method="POST">
+                                                {% csrf_token %}
+                                                <button type="submit" class="like-btn"><i class="fas fa-thumbs-up"></i></button>
+                                            </form>
+                                        {% else %}                    
+                                            <form action="{% url 'like_comment' topic.id post.id comment.id user.id %}" method="POST">
+                                                {% csrf_token %}
+                                                <button type="submit" class="like-btn"><i class="far fa-thumbs-up"></i></button>
+                                            </form>
+                                        {% endif %}
+                                    {% endwith %}
+                                </div>
+                                <span>-{{ comment.dislikes.count }}</span>
+                                <div>
+                                    {% with comment.dislikes.all as dislikes  %}
+                                        {% if user.account in dislikes %}
+                                        <form action="{% url 'undislike_comment' topic.id post.id comment.id user.id %}" method="POST">
+                                                {% csrf_token %}
+                                                <button type="submit" class="like-btn"><i class="fas fa-thumbs-down"></i></button>
+                                            </form>
+                                        {% else %}                    
+                                            <form action="{% url 'dislike_comment' topic.id post.id comment.id user.id %}" method="POST">
+                                                {% csrf_token %}
+                                                <button type="submit" class="like-btn"><i class="far fa-thumbs-down"></i></button>
+                                            </form>
+                                        {% endif %}
+                                    {% endwith %}
+                                </div>
+                            </div>
+                            
                         </div>
                     </div>
-                {% endfor %}
+                </div>
+            {% endfor %}
         </div>
-    </div>
-    <div class="comment-side-list">
-        <div class="form-container">
+        <div class="comment-form-container">
             <form action="{% url 'add_comment' user.account.user_id topic.id post.id %}" method="POST">
                 {% csrf_token %}
                 {{ comment_form.as_p }}
@@ -142,6 +140,8 @@
             </form>
         </div>
     </div>
+</div>
+<div class="comment-side-list">
 </div>
 
 {% endblock %}
