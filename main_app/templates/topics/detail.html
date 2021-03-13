@@ -32,6 +32,7 @@
           {% if  user.account.user_id == topic.user_id %}  
             <a class="btn" href="{% url 'topic_update' topic.id %}"><i class="far fa-edit"></i></a>
             <a class="btn" href="{% url 'topic_delete' topic.id %}"><i class="far fa-trash-alt"></i></a>
+          {% endif %}
             {% with topic.topicphoto_set.all as photos %}
               {% for photo in photos %}
                 {% if photo == photos.first %}
@@ -42,8 +43,8 @@
               {% endfor %}
             {% endwith %}
             {% if  user.account.user_id == topic.user_id %} 
-              <a class="waves-effect waves-light btn modal-trigger" href="#modal1"><i class="fas fa-upload"></i></a>
-              <div id="modal1" class="modal">
+              <a class="waves-effect waves-light btn modal-trigger" href="#photoform"><i class="fas fa-upload"></i></a>
+              <div id="photoform" class="modal">
                 <div class="modal-content">
                   <form action="{% url 'topic_photo' topic.id%}"
                     enctype="multipart/form-data"
@@ -56,7 +57,6 @@
               </div>
             {% endif %}
             
-          {% endif %}
         </div>
       </div>
       <div class="headline-rule"></div>

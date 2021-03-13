@@ -8,3 +8,7 @@ function init() {
     year = new Date().getFullYear();
     yearEl.innerText = year
 }
+
+$(document).ready(function() {
+    $('.modal').modal();
+});
