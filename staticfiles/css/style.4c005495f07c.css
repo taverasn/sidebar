@@ -528,21 +528,21 @@ main {
     display: flex;
     flex-direction: column;
     overflow-wrap: break-word;
-    width: 60%;
+    width: 70%;
 }
 
 .description-container > img {
-    max-width: 30%;
+    max-width: 20%;
     margin-right: 15px;
 }
 
 .user-options {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    justify-content: flex-end;
+    align-items: flex-end;
     width: fit-content;
-    padding-left: 15px;
+    padding: 10px;
 }
 
 .user-options > a {
