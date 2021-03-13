@@ -188,7 +188,7 @@ main {
     flex-grow: unset;
     padding-bottom: 10px;
     height: 100vh;
-    overflow: hidden;
+    overflow: scroll;
     background-color: var(--test-color-2);
 }
 
@@ -713,22 +713,12 @@ main {
 
 .comment-form-container > form {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: space-between;
     align-items: center;
     padding-left: 20px;
-    width: 100%;
-    padding-bottom: 20px;
 }
 
 .comment-form-container > form > input {
-    width: 80%;
-}
-
-.comment-form-container > form > p {
-    width: 100%;
-}
-
-.comment-form-container > form > p > label {
-    visibility: hidden;
+    width: 70%;
 }
