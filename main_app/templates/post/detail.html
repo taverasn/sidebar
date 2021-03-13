@@ -40,17 +40,17 @@
                 </div>
             </div>
             <div class="description-container">
+                {% with post.postphoto_set.all as photos %}
+                    {% for photo in photos %}
+                        {% if photo == photos.first %}
+                            <img src="{{ photo.url }}" alt="{{ photo.url }}" class="responsive-img card-panel">
+                        {% endif %}
+                    {% empty %}
+                        <div></div>
+                    {% endfor %}
+                {% endwith %}
                 <div class="detail-description">
                     <p>{{post.description}}</p>
-                    {% with post.postphoto_set.all as photos %}
-                        {% for photo in photos %}
-                            {% if photo == photos.first %}
-                                <img src="{{ photo.url }}" alt="{{ photo.url }}" class="responsive-img card-panel">
-                            {% endif %}
-                        {% empty %}
-                            <div></div>
-                        {% endfor %}
-                    {% endwith %}
                 </div>
                 <div class="user-options">
                     {% if  user.account.user_id == post.user_id or user.account.user_id == topic.user_id %}  

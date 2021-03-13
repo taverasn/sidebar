@@ -539,10 +539,10 @@ main {
 .user-options {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    justify-content: flex-end;
+    align-items: flex-end;
     width: fit-content;
-    padding-left: 15px;
+    padding: 10px;
 }
 
 .user-options > a {
