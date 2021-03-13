@@ -47,7 +47,8 @@
                     {% if  user.account.user_id == post.user_id or user.account.user_id == topic.user_id %}  
                         <a class="btn" href="{% url 'post_update' topic.id post.id %}"><i class="far fa-edit"></i></a>
                         <a class="btn" href="{% url 'post_delete' topic.id post.id %}"><i class="far fa-trash-alt"></i></a>
-                        {% with topic.topicphoto_set.all as photos %}
+                    {% endif %}
+                        {% with post.postphoto_set.all as photos %}
                             {% for photo in photos %}
                                 {% if photo == photos.first %}
                                     <img src="{{ photo.url }}" alt="{{ photo.url }}" class="responsive-img card-panel">
@@ -60,7 +61,7 @@
                             <a class="waves-effect waves-light btn modal-trigger" href="#modal1"><i class="fas fa-upload"></i></a>
                             <div id="modal1" class="modal">
                                 <div class="modal-content">
-                                    <form action="{% url 'topic_photo' topic.id%}"
+                                    <form action="{% url 'post_photo' topic.id post.id %}"
                                         enctype="multipart/form-data"
                                         method="POST">
                                         {% csrf_token %}
@@ -70,7 +71,6 @@
                                 </div>
                             </div>
                         {% endif %}
-                    {% endif %}
                 </div>
             </div>
             <div class="headline-rule"></div>
