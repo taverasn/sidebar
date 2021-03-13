@@ -555,6 +555,13 @@ main {
     align-items: center;
 }
 
+.splash-card-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .content-wrapper {
     display: flex;
     flex-direction: column;
@@ -676,6 +683,7 @@ main {
     background: none;
     border: none;
     color: var(--test-color-4);
+    cursor: pointer;
 }
 
 .like-btn:focus {
