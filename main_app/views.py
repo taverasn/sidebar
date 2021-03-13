@@ -185,6 +185,25 @@ def undownvote_post(request, topic_id, post_id, user_id):
     Post.objects.get(id=post_id).downvotes.remove(user_id)
     return redirect("topics_detail", topic_id=topic_id)
 
+def upvote_postdetail(request, topic_id, post_id, user_id):
+    Post.objects.get(id=post_id).upvotes.add(user_id)
+    return redirect("post_detail", topic_id=topic_id, post_id=post_id)
+
+
+def downvote_postdetail(request, topic_id, post_id, user_id):
+    Post.objects.get(id=post_id).downvotes.add(user_id)
+    return redirect("post_detail", topic_id=topic_id, post_id=post_id)
+
+
+def unupvote_postdetail(request, topic_id, post_id, user_id):
+    Post.objects.get(id=post_id).upvotes.remove(user_id)
+    return redirect("post_detail", topic_id=topic_id, post_id=post_id)
+
+
+def undownvote_postdetail(request, topic_id, post_id, user_id):
+    Post.objects.get(id=post_id).downvotes.remove(user_id)
+    return redirect("post_detail", topic_id=topic_id, post_id=post_id)
+
 # Comment Views
 
 

@@ -12,12 +12,12 @@
                 <div class="headline-votes-container">
                     {% with post.upvotes.all as upvotes  %}
                       {% if user.account in upvotes %}
-                        <form action="{% url 'unupvote_post' topic.id post.id user.id %}" method="POST">
+                        <form action="{% url 'unupvote_postdetail' topic.id post.id user.id %}" method="POST">
                           {% csrf_token %}
                           <button type="submit" class="btn"><i class="fas fa-caret-square-up"></i></button>
                         </form>
                       {% else %}                    
-                        <form action="{% url 'upvote_post' topic.id post.id user.id %}" method="POST">
+                        <form action="{% url 'upvote_postdetail' topic.id post.id user.id %}" method="POST">
                           {% csrf_token %}
                           <button type="submit" class="btn"><i class="far fa-caret-square-up"></i></button>
                         </form>
@@ -26,12 +26,12 @@
                     <span>{{ post.upvotes.count|sub:post.downvotes.count }}</span>
                     {% with post.downvotes.all as downvotes  %}
                       {% if user.account in downvotes %}
-                        <form action="{% url 'undownvote_post' topic.id post.id user.id %}" method="POST">
+                        <form action="{% url 'undownvote_postdetail' topic.id post.id user.id %}" method="POST">
                           {% csrf_token %}
                           <button type="submit" class="btn"><i class="fas fa-caret-square-down"></i></button>
                         </form>
                       {% else %}                    
-                        <form action="{% url 'downvote_post' topic.id post.id user.id %}" method="POST">
+                        <form action="{% url 'downvote_postdetail' topic.id post.id user.id %}" method="POST">
                           {% csrf_token %}
                           <button type="submit" class="btn"><i class="far fa-caret-square-down"></i></button>
                         </form>
