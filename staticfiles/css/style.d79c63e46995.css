@@ -542,7 +542,7 @@ main {
     justify-content: center;
     align-items: center;
     width: fit-content;
-    padding-left: 15px;
+    padding: 10px;
 }
 
 .user-options > a {

@@ -513,36 +513,43 @@ main {
 .description-container {
     display: flex;
     flex-direction: row;
-    width: 100%;
+    width: 90%;
     overflow-wrap: break-word;
-    justify-content: space-between;
     margin-top: 15px;
     padding-left: 15px;
-    padding-right: 15px;
     background-color: white;
     border: 3px solid var(--test-color-4);
     border-radius: 3px;
+}
+
+.description-wrapper {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
 }
 
 .detail-description {
     display: flex;
     flex-direction: column;
     overflow-wrap: break-word;
-    width: 60%;
+    justify-content: flex-start;
+    width: 100%;
+    padding-right: 55px;
 }
 
-.description-container > img {
-    max-width: 30%;
-    margin-right: 15px;
+.detail-description > img {
+    max-height: 290px;
+    margin-right: 20px;
 }
 
 .user-options {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    justify-content: flex-end;
+    align-items: flex-end;
     width: fit-content;
-    padding-left: 15px;
+    padding: 10px;
 }
 
 .user-options > a {
