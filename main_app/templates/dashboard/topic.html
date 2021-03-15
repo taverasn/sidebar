@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>{{ user.account.first_name }}'s Topics</h1>
+
+{% for topic in topics  %}
+<div>
+    <h1>{{ topic.title }}</h1>
+    <a class="btn" href="{% url 'topic_update' topic.id %}"><i class="far fa-edit"></i></a>
+    <a class="btn" href="{% url 'topic_delete' topic.id %}"><i class="far fa-trash-alt"></i></a>
+</div>
+{% endfor %}
+
+{% endblock  %}

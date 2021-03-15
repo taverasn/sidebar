@@ -10,6 +10,7 @@ urlpatterns = [
     path("dashboard/<int:pk>/accounts/update/", views.AccountUpdate.as_view(), name="account_update"),
     path("dashboard/<int:pk>/accounts/delete/", views.AccountDelete.as_view(), name="account_delete"),
     path("dashboard/accounts/<int:user_id>/account_photo/", views.account_photo, name="account_photo"),
+    path("dashboard/topics/", views.dashboard_topics, name="dashboard_topics"),
     path("topics/<int:topic_id>/", views.topics_detail, name="topics_detail"),
     path("topics/", views.TopicList.as_view(), name="topics_index"),
     path("topics/create/", views.TopicCreate.as_view(), name="topic_create"),
