@@ -2,24 +2,27 @@
 
 {% block content %}
 
-<div class="headline">
-  {% if object %}
-    <h1>Edit {{object.title}}</h1>
-    <a class="btn" href="{% url 'topics_detail' topic.id %}">Back To Topic</a>
-  {% else %}
-    <h1>Add Topic</h1>
-    <a class="btn" href="{% url 'topics_index' %}">Back to Topics</a>
-  {% endif %}
+<div class="topic-index-main">
+  <div class="form-page-container">
+    <div class="headline">
+      {% if object %}
+        <a class="btn" href="{% url 'topics_index' %}"><i class="fas fa-angle-double-left"></i></a>
+        <span class="form-page-title">Edit {{object.title}}</span>
+      {% else %}
+        <a class="btn" href="{% url 'topics_index' %}"><i class="fas fa-angle-double-left"></i></a>
+        <span class="form-page-title">Add Topic</span>
+      {% endif %}
+    </div>
+    <form action="" method="post">
+      {% csrf_token %}
+      <table>
+        {{ form.as_table }}
+      </table>
+      <hr>
+      <input type="submit" value="Submit!" class="btn">
+    </form>
+  </div>
 </div>
-
-  <form action="" method="post">
-    {% csrf_token %}
-    <table>
-      {{ form.as_table }}
-    </table>
-    <hr>
-    <input type="submit" value="Submit!" class="btn">
-  </form>
 
 
 {% endblock %}
