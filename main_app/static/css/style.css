@@ -828,3 +828,14 @@ main {
     max-width: 30%;
     margin-right: 15px;
 }
+
+.dashboard-page-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-left: 20px;
+    padding-right: 20px;
+    height: 100vh;
+    width: 100%;
+    overflow: scroll;
+}
