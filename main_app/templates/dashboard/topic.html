@@ -5,10 +5,14 @@
     <div class="form-page-container">
         <h1>{{ user.account.first_name }}'s Topics</h1>
         {% for topic in topics  %}
-        <div>
-            <a href="{% url 'topics_detail' topic.id %}"><h1>{{ topic.title }}</h1></a>
-            <a class="btn" href="{% url 'topic_update' topic.id %}"><i class="far fa-edit"></i></a>
-            <a class="btn" href="{% url 'topic_delete' topic.id %}"><i class="far fa-trash-alt"></i></a>
+        <div class="card">
+            <div class="card-content"> 
+                <a href="{% url 'topics_detail' topic.id %}"><h1>{{ topic.title }}</h1></a>
+            <div class="card-action">
+                <a class="btn" href="{% url 'topic_update' topic.id %}"><i class="far fa-edit"></i></a>
+                <a class="btn" href="{% url 'topic_delete' topic.id %}"><i class="far fa-trash-alt"></i></a>
+            </div>
+            </div>
         </div>
         {% endfor %}
     </div>
