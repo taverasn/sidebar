@@ -531,20 +531,6 @@ main {
     border-radius: 3px;
 }
 
-.account-detail-container {
-    display: flex;
-    flex-direction: row;
-    width: 90%;
-    overflow-wrap: break-word;
-    justify-content: space-between;
-    margin-top: 15px;
-    padding-left: 15px;
-    padding-right: 15px;
-    background-color: white;
-    border: 3px solid var(--test-color-4);
-    border-radius: 3px;
-}
-
 .detail-description {
     display: flex;
     flex-direction: column;

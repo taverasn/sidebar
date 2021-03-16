@@ -2,12 +2,17 @@
 
 {% block content %}
 
-    <h4>Are you sure you want to delete <span class="teal-text">{{ object.title }}</span></h4>
-
-    <form action="" method="POST">
-        {% csrf_token %}
-        <input type="submit" value="Yes - Delete!" class="btn">
-        <a href="{% url 'post_detail' object.topic.id object.id %}">Cancel</a>
-    </form>
-
+<div class="topic-index-main">
+    <div class="delete-page-container">
+        <div class="headline">
+            <span>Are you sure you want to delete {{ object.title }}</span>
+        </div>
+        <form action="" method="POST">
+            {% csrf_token %}
+            <input type="submit" value="Yes - Delete!" class="btn">
+        </form>
+        <a class="btn" href="{% url 'post_detail' object.topic.id object.id %}">Cancel</a>
+    </div>
+</div>
+    
 {% endblock %}

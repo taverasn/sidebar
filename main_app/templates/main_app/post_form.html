@@ -1,40 +1,27 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  {% if object %}
-    <h1>Edit {{object.title}}</h1>
-  {% else %}
-    <h1>Add Post</h1>
-  {% endif %}
 
-  <!-- Leaving the action empty makes the form post to the same url used to display it -->
-  <form action="" method="post">
-    <!-- Django requires the following for security purposes -->
-    {% csrf_token %}
-    <table>
-      <!-- Render the inputs inside of <tr>s & <td>s -->
-      {{ form.as_table }}
-    </table>
-
-   
-      <!-- add photo to post Would 'post' be the model name?-->
-      {% comment %} {% for photo in post.photo_set.all %}
-        <img src="{{ photo.url }}" alt="{{ photo.url }}" class="responsive-img card-panel">
-      {% empty %}
-        <div class="card-panel center-align">No photos uploaded</div>
-      {% endfor%} {% endcomment %}
-  
-      <!-- add photo form Would 'post' be the model name?-->
-      {% comment %} <form action="{% url 'add_photo' post.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
-        {% csrf_token %}
-        <input type="file" name="photo-file">
-        <br><br>
-        <input type="submit" class="btn" value="Upload Photo">
-      </form> {% endcomment %}
-  
+<div class="topic-index-main">
+  <div class="form-page-container">
+    <div class="headline">
+      {% if object %}
+        <a class="btn" href="{% url 'topics_index' %}"><i class="fas fa-angle-double-left"></i></a>
+        <span class="form-page-title">Edit {{object.title}}</span>
+      {% else %}
+        <a class="btn" href="{% url 'topics_index' %}"><i class="fas fa-angle-double-left"></i></a>
+        <span class="form-page-title">Add Post</span>
+      {% endif %}
     </div>
-    <input type="submit" value="Submit!" class="btn">
-  </form>
-
+    <form action="" method="post">
+      {% csrf_token %}
+      <table>
+        {{ form.as_table }}
+      </table>
+      <hr>
+      <input type="submit" value="Submit!" class="btn">
+    </form>
+  </div>
+</div>
   
 {% endblock %}

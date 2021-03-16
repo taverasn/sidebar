@@ -1,25 +1,28 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>Dashboard</h1>
-
-<div>
-    <a class="card-link" href="{% url 'account_dashboard' user.id %}">    
-        <div class="card">
-            <div class="card-content">
-                <span class="card-title">View Account Info</span>
-            </div>
+<div class="topic-index-main">
+    <div class="form-page-container">
+        <h1>Dashboard</h1>
+        <div>
+            <a class="card-link" href="{% url 'account_dashboard' user.id %}">    
+                <div class="card">
+                    <div class="card-content">
+                        <span class="card-title">View Account Info</span>
+                    </div>
+                </div>
+            </a>
         </div>
-    </a>
-</div>
-<div>
-    <a class="card-link" href="{% url 'dashboard_topics' %}">    
-        <div class="card">
-            <div class="card-content">
-                <span class="card-title">View Your Topics</span>
-            </div>
+        <div>
+            <a class="card-link" href="{% url 'dashboard_topics' %}">    
+                <div class="card">
+                    <div class="card-content">
+                        <span class="card-title">View Your Topics</span>
+                    </div>
+                </div>
+            </a>
         </div>
-    </a>
+    </div>
 </div>
 
 {% endblock  %}
