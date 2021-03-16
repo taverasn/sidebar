@@ -823,3 +823,8 @@ main {
 .tag-container {
     margin-bottom: 25px;
 }
+
+.account-pic {
+    max-width: 30%;
+    margin-right: 15px;
+}
