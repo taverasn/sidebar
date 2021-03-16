@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="topic-index-main">
+    <div class="form-page-container">
+        <h1>{{ user.account.first_name }}'s Posts</h1>
+        {% for post in posts  %}
+        <div>
+            <a href="{% url 'post_detail' post.topic.id post.id %}"><h1>{{ post.title }}</h1></a>
+            <a class="btn" href="{% url 'post_update' post.topic.id post.id %}"><i class="far fa-edit"></i></a>
+            <a class="btn" href="{% url 'post_delete' post.topic.id post.id %}"><i class="far fa-trash-alt"></i></a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock  %}
