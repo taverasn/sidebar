@@ -74,10 +74,6 @@ Features:
 <img src="./main_app/static/images/screenshots/topicdetail.png" width="200">
 ---
 
-### Create Topic Page
-<img src="./main_app/static/images/wireframes/createtopic.png" width="200">
----
-
 ### Post Index Page
 <img src="./main_app/static/images/screenshots/topicdetail.png" width="200">
 ---
