@@ -16,6 +16,20 @@ Features:
 
 ---
 
+Future Enhancements:
+- Dark Mode
+- Custom Styling for Topics You've Created
+- Meme Generation
+- Ability to upload Videos and Polls
+- Search Bar
+- Topics Index will show Topics that share tags that your bookmarked Topics have
+
+---
+
+Unolved Problems:
+- CRUD for Photos
+- Deleting the User when Account gets deleted
+
 ## Technologies Used 💻
 
 
