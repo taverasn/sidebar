@@ -54,6 +54,13 @@ def dashboard_topics(request):
     topics = Topic.objects.filter(user=request.user)
     return render(request, 'dashboard/topic.html', {'topics': topics})
 
+def dashboard_posts(request):
+    posts = Post.objects.filter(user=request.user)
+    return render(request, 'dashboard/post.html', {'posts': posts})
+
+def dashboard_upvoted(request):
+    return render(request, 'dashboard/upvotedposts.html')
+
 class AccountCreate(LoginRequiredMixin, CreateView):
     model = Account
     fields = ["first_name", "last_name", "email", "bio"]
