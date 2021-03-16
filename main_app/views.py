@@ -50,6 +50,9 @@ def account_dashboard(request, user_id):
     account = Account.objects.get(user_id=user_id)
     return render(request, "dashboard/account.html", {"account": account})
 
+def dashboard_topics(request):
+    topics = Topic.objects.filter(user=request.user)
+    return render(request, 'dashboard/topic.html', {'topics': topics})
 
 class AccountCreate(LoginRequiredMixin, CreateView):
     model = Account

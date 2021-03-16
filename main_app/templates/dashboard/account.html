@@ -1,35 +1,40 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>Account Detail</h1>
 
-<div class="card">
-    <div class="card-content">
-        <div>
-            <h1>{{ user.account.first_name }}</h1>
-            <h3>{{ user.account.bio }}</h3>
-        </div>
-        <div>
+<div class="topic-index-main">
+    <div class="form-page-container">
+        <h1>Account Detail</h1>
+        <div class="account-detail-container">
             {% with user.accountphoto_set.all as photos  %}
-            {% for photo in photos %}
-            {% if photo == photos.first %}
-            <img src="{{ photo.url }}" alt="{{ photo.url }}" class="responsive-img card-panel">
-            {% endif %}
-            {% empty %}
-            <div>No account photo</div>
-            {% endfor %}
+                {% for photo in photos %}
+                    {% if photo == photos.first %}
+                        <img src="{{ photo.url }}" alt="{{ photo.url }}" class="responsive-img card-panel">
+                    {% endif %}
+                {% empty %}
+                    <div>No account photo</div>
+                {% endfor %}
             {% endwith %}
-            <form action="{% url 'account_photo' user.id%}"
-                enctype="multipart/form-data"
-                method="POST">
-            {% csrf_token %}
-            <input type="file" name="photo_file">
-            <input type="submit" class="btn" value="Upload Photo">   
-            </form>
-        </div>
-        <div class="card-action link-container">
-            <a style="color: #f77f00;" href="{% url 'account_update' user.id %}">Edit</a>
-            <a style="color: #f77f00;" href="{% url 'account_delete' user.id %}">Delete</a>
+            <div class="detail-description">
+                <h1>{{ user.account.first_name }}</h1>
+                <h3>{{ user.account.bio }}</h3>
+            </div>
+            <div class="user-options">
+                <a class="waves-effect waves-light btn modal-trigger" href="#photoform"><i class="fas fa-upload"></i></a>
+                <div id="photoform" class="modal">
+                    <div class="modal-content">
+                        <form action="{% url 'account_photo' user.id %}"
+                        enctype="multipart/form-data"
+                        method="POST">
+                            {% csrf_token %}
+                            <input type="file" name="photo_file">
+                            <input type="submit" class="btn modal-close" value="Upload Photo">   
+                        </form>
+                    </div>
+                </div>
+                <a class="btn" href="{% url 'account_update' user.id %}"><i class="far fa-edit"></i></a>
+                <a class="btn" href="{% url 'account_delete' user.id %}"><i class="far fa-trash-alt"></i></a>
+            </div>
         </div>
     </div>
 </div>

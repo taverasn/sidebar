@@ -1,19 +1,27 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  {% if object %}
-    <h1>Edit {{object.title}}</h1>
-  {% else %}
-    <h1>Add Comment</h1>
-  {% endif %}
-  <form action="" method="post">
-    {% csrf_token %}
-    <table>
-      {{ form.as_table }}
-    </table>
-    <hr>
-    <input type="submit" value="Submit!" class="btn">
-  </form>
 
+<div class="topic-index-main">
+  <div class="form-page-container">
+    <div class="headline">
+      {% if object %}
+        <a class="btn" href="{% url 'post_detail' object.post.topic.id object.post.id %}"><i class="fas fa-angle-double-left"></i></a>
+        <span class="form-page-title">Edit {{object.title}}</span>
+      {% else %}
+        <a class="btn" href="{% url 'post_detail' object.post.topic.id object.post.id %}"><i class="fas fa-angle-double-left"></i></a>
+        <span class="form-page-title">Add Comment</span>
+      {% endif %}
+    </div>
+    <form action="" method="post">
+      {% csrf_token %}
+      <table>
+        {{ form.as_table }}
+      </table>
+      <hr>
+      <input type="submit" value="Submit!" class="btn">
+    </form>
+  </div>
+</div>
 
 {% endblock %}
