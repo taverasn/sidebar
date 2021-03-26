@@ -99,3 +99,5 @@ Unolved Problems:
 ### Post Detail Page
 <img src="./main_app/static/images/screenshots/postdetail.png" width="200">
 ---
+
+## Trello Planning @ [SideBar Trello](https://trello.com/b/417AQ8bB/project-4-django)
