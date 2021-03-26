@@ -4,7 +4,7 @@
 <div class="topic-index-main">
     <div class="dashboard-page-container">
         <h1>Upvoted Post's</h1>
-        {% with user.account.upvotes.all as upvoted_posts %}
+        {% with user.upvotes.all as upvoted_posts %}
             {% for post in upvoted_posts  %}
                 <div>
                     <a class="card-link" href="{% url 'post_detail' post.topic.id post.id %}">    

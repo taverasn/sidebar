@@ -47,8 +47,8 @@ class Post(models.Model):
     title = models.CharField(max_length=50)
     description = models.TextField(max_length=500)
     topic = models.ForeignKey(Topic, on_delete=models.CASCADE, null=True)
-    upvotes = models.ManyToManyField(Account, related_name="upvotes")
-    downvotes = models.ManyToManyField(Account, related_name="downvotes")
+    upvotes = models.ManyToManyField(User, related_name="upvotes")
+    downvotes = models.ManyToManyField(User, related_name="downvotes")
 
     def __str__(self):
         return f"{self.title}"
@@ -64,8 +64,8 @@ class Comment(models.Model):
     created = models.DateTimeField(default=datetime.now, blank=True)
     text = models.TextField(max_length=250)
     post = models.ForeignKey(Post, on_delete=models.CASCADE, null=True)
-    likes = models.ManyToManyField(Account, related_name="likes")
-    dislikes = models.ManyToManyField(Account, related_name="dislikes")
+    likes = models.ManyToManyField(User, related_name="likes")
+    dislikes = models.ManyToManyField(User, related_name="dislikes")
 
 
     def get_absolute_url(self):
