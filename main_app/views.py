@@ -1,5 +1,7 @@
 import uuid
 import boto3
+import logging
+
 from django.utils.html import format_html
 from django.shortcuts import render, redirect, HttpResponseRedirect, get_object_or_404
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -14,7 +16,8 @@ from .models import Account, Topic, Post, Tag, Comment, AccountPhoto, TopicPhoto
 from django.contrib.auth.models import User
 
 S3_BASE_URL = "https://s3.us-east-2.amazonaws.com/"
-BUCKET = "sidebar-aws"
+BUCKET = "sidebar-new"
+logger = logging.getLogger(__name__)
 
 
 def signup(request):
@@ -291,8 +294,8 @@ def account_photo(request, user_id):
 
             photo = AccountPhoto(url=url, user_id=user_id)
             photo.save()
-        except:
-            print("An error occured uploading file to S3 AWS")
+        except Exception as e:
+            print("An error occurred uploading file to S3 AWS:", e)
     return redirect("account_dashboard", user_id=user_id)
 
 
@@ -314,8 +317,8 @@ def topic_photo(request, topic_id):
 
             photo = TopicPhoto(url=url, topic_id=topic_id)
             photo.save()
-        except:
-            print("An error occured uploading file to S3 AWS")
+        except Exception as e:
+            print("An error occurred uploading file to S3 AWS:", e)
     return redirect("topics_detail", topic_id=topic_id)
 
 
@@ -337,6 +340,6 @@ def post_photo(request, topic_id, post_id):
 
             photo = PostPhoto(url=url, post_id=post_id)
             photo.save()
-        except:
-            print("An error occured uploading file to S3 AWS")
+        except Exception as e:
+            print("An error occurred uploading file to S3 AWS:", e)
     return redirect("post_detail", topic_id=topic_id, post_id=post_id)

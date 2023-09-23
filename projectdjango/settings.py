@@ -83,9 +83,14 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'projectdjango',
+        'USER': 'postgres',
+        'PASSWORD': 'Mansions1$',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
     }
 }
 
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
