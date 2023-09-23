@@ -5,7 +5,7 @@ SideBar is a forum like web-app that allows users to create topics, posts within
 The idea of the sidebar is that all of your bookmarked topics are right where you need them; in the sidebar!
 With full CRUD, photo upload, likes, dislikes, up and down voting we have a lot to offer a vast community of users.
 
-## Please checkus out @ [SideBar](https://sidebar-app.herokuapp.com/) 🌐
+## Please checkus out @ [SideBar](https://sidebar-app-bd7eaebfac41.herokuapp.com) 🌐
 
 Features:
 - User login and account creation
